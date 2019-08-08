@@ -5,10 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Designs\" />
-    <Folder Include="Entities\" />
-    <Folder Include="Enums\" />
     <Folder Include="Context\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebAPI.Domain\WebAPI.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,12 +27,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>090807_DemoPartial.tt</DependentUpon>
     </Compile>
+    <Compile Update="Designs\ShiftCalendar.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ShiftCalendar.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <None Update="Designs\090807_DemoPartial.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>090807_DemoPartial.cs</LastGenOutput>
+    </None>
+    <None Update="Designs\ShiftCalendar.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>ShiftCalendar.cs</LastGenOutput>
     </None>
   </ItemGroup>
 
