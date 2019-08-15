@@ -20,6 +20,12 @@
             }
         }
 
+        public DateTime CreatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
+        public int? CreatedBy { get; set; }
+        public int? UpdatedBy { get; set; }
+
         private List<INotification> _domainEvents;
         public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();
 
@@ -41,7 +47,7 @@
 
         public bool IsTransient()
         {
-            return this.Id == default(Int32);
+            return Id == default(Int32);
         }
 
         public override bool Equals(object obj)
@@ -52,7 +58,7 @@
             if (Object.ReferenceEquals(this, obj))
                 return true;
 
-            if (this.GetType() != obj.GetType())
+            if (GetType() != obj.GetType())
                 return false;
 
             Entity item = (Entity)obj;
@@ -60,7 +66,7 @@
             if (item.IsTransient() || this.IsTransient())
                 return false;
             else
-                return item.Id == this.Id;
+                return item.Id == Id;
         }
 
         public override int GetHashCode()
