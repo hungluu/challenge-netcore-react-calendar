@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using WebAPI.Infrastructure;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using System.IO;
 
 namespace WebAPI.API
 {
@@ -14,11 +10,28 @@ namespace WebAPI.API
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var configuration = GetConfiguration();
+
+            var host = BuildWebHost(configuration, args);
+
+            host.MigrateDbContext<WebAPIContext>((_, __) => { });
+
+            host.Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        public static IWebHost BuildWebHost(IConfiguration configuration, string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+                .Build();
+
+        private static IConfiguration GetConfiguration()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddEnvironmentVariables();
+
+            return builder.Build();
+        }
     }
 }

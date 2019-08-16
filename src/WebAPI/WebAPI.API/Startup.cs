@@ -8,6 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebAPI.API.Infrastructure.AutofacModules;
 using Swashbuckle.AspNetCore.Swagger;
+using WebAPI.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace WebAPI.API
 {
@@ -24,12 +27,14 @@ namespace WebAPI.API
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddCustomMvc()
+                .AddCustomDbContext(Configuration)
                 .AddCustomSwagger();
 
             var container = new ContainerBuilder();
             container.Populate(services);
 
             container.RegisterModule(new ApplicationModule(Configuration["ConnectionString"]));
+            container.RegisterModule(new MediatorModule());
 
             return new AutofacServiceProvider(container.Build());
         }
@@ -49,7 +54,8 @@ namespace WebAPI.API
             }
 
             app.UseHttpsRedirection();
-            //app.UseMvc();
+
+            ConfigureAuth(app);
 
             app.UseMvcWithDefaultRoute();
 
@@ -60,6 +66,11 @@ namespace WebAPI.API
                    c.OAuthClientId("orderingswaggerui");
                    c.OAuthAppName("Ordering Swagger UI");
                });
+        }
+
+        protected virtual void ConfigureAuth(IApplicationBuilder app)
+        {
+            app.UseAuthentication();
         }
     }
 
@@ -76,16 +87,6 @@ namespace WebAPI.API
                 .AddControllersAsServices();  //Injecting Controllers themselves thru DI
                                               //For further info see: http://docs.autofac.org/en/latest/integration/aspnetcore.html#controllers-as-services
 
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy("CorsPolicy",
-            //        builder => builder
-            //        .SetIsOriginAllowed((host) => true)
-            //        .AllowAnyMethod()
-            //        .AllowAnyHeader()
-            //        .AllowCredentials());
-            //});
-
             return services;
         }
 
@@ -101,21 +102,25 @@ namespace WebAPI.API
                     Description = "The Elite HTTP API",
                     TermsOfService = "Terms Of Service"
                 });
-
-                //options.AddSecurityDefinition("oauth2", new OAuth2Scheme
-                //{
-                //    Type = "oauth2",
-                //    Flow = "implicit",
-                //    AuthorizationUrl = $"{configuration.GetValue<string>("IdentityUrlExternal")}/connect/authorize",
-                //    TokenUrl = $"{configuration.GetValue<string>("IdentityUrlExternal")}/connect/token",
-                //    Scopes = new Dictionary<string, string>()
-                //    {
-                //        { "orders", "Ordering API" }
-                //    }
-                //});
-
-                //options.OperationFilter<AuthorizeCheckOperationFilter>();
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddEntityFrameworkSqlServer()
+                   .AddDbContext<WebAPIContext>(options =>
+                   {
+                       options.UseSqlServer(configuration["ConnectionString"],
+                           sqlServerOptionsAction: sqlOptions =>
+                           {
+                               sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
+                               sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                           });
+                   },
+                       ServiceLifetime.Scoped  //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
+                   );
 
             return services;
         }
