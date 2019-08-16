@@ -1,45 +1,43 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.API.Application.Queries;
+using WebAPI.API.Infrastructure;
 
 namespace WebAPI.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ShopsController : ControllerBase
     {
+        private readonly IShopQueries _shopQueries;
+
+        public ShopsController(IShopQueries shopQueries)
+        {
+            _shopQueries = shopQueries;
+        }
+
         // GET api/shops
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        [ProducesResponseType(typeof(RestSuccessViewModel<List<ShopViewModel>>), (int)HttpStatusCode.OK)]
+        public async Task<RestSuccessViewModel<List<ShopViewModel>>> Get()
         {
-            return new string[] { "value1", "value2" };
-        }
+            List<ShopViewModel> shops;
 
-        // GET api/shops/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
+            try
+            {
+                shops = await _shopQueries.GetShopsAsync();
+            }
+            catch
+            {
+                shops = new List<ShopViewModel>();
+            }
 
-        // POST api/shops
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/shops/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/shops/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            return new RestSuccessViewModel<List<ShopViewModel>>
+            {
+                data = shops
+            };
         }
     }
 }

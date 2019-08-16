@@ -2,19 +2,20 @@
 
 namespace WebAPI.API.Application.Queries
 {
-    public class Shop
+    public class ShopViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        public List<ShopLocation> ShopLocations { get; set; }
+        public List<ShopLocationViewModel> ShopLocations { get; set; }
     }
 
-    public class ShopLocation
+    public class ShopLocationViewModel
     {
         public string Name { get; set; }
-        public List<ShiftSetting> ShiftSettings { get; set; }
+        public List<ShiftSettingViewModel> ShiftSettings { get; set; }
     }
 
-    public class ShiftSetting
+    public class ShiftSettingViewModel
     {
         public string Rule { get; set; }
         public int Quantity { get; set; }

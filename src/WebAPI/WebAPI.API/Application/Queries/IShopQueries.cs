@@ -1,13 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace WebAPI.API.Application.Queries
 {
-    interface IShopQueries
+    public interface IShopQueries
     {
-        Task<Shop> GetShopsAsync();
+        Task<List<ShopViewModel>> GetShopsAsync();
 
-        Task<ShopLocation> GetShopLocationsFromShopAsync(int shopId);
+        Task<ShopLocationViewModel> GetShopLocationsFromShopAsync(int shopId);
 
-        Task<ShopLocation> GetLocationAsync(int locationId);
+        Task<ShopLocationViewModel> GetLocationAsync(int locationId);
     }
 }
