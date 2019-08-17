@@ -8,13 +8,13 @@ namespace WebAPI.Infrastructure.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Shop> shopBuilder)
         {
-            shopBuilder.ToTable("shops", WebAPIContext.DEFAULT_SCHEMA);
+            shopBuilder.ToTable("shops", WebApiContext.DEFAULT_SCHEMA);
 
             shopBuilder.HasKey(s => s.Id);
             shopBuilder.Ignore(s => s.DomainEvents);
 
             shopBuilder.Property(s => s.Id)
-                .ForSqlServerUseSequenceHiLo("shops_seq", WebAPIContext.DEFAULT_SCHEMA);
+                .ForSqlServerUseSequenceHiLo("shops_seq", WebApiContext.DEFAULT_SCHEMA);
             shopBuilder.Property<string>("Name")
                 .IsRequired();
         }

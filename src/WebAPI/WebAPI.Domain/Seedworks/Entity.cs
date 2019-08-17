@@ -3,6 +3,7 @@
     using System;
     using MediatR;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public abstract class Entity
     {
@@ -21,13 +22,18 @@
         }
 
         public DateTime CreatedAt { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public DateTime? DeletedAt { get; set; }
-        public int? CreatedBy { get; set; }
-        public int? UpdatedBy { get; set; }
+        //public int? CreatedBy { get; set; }
+        //public DateTime? UpdatedAt { get; set; }
+        //public int? UpdatedBy { get; set; }
+        //public DateTime? DeletedAt { get; set; }
 
         private List<INotification> _domainEvents;
         public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();
+
+        public Entity ()
+        {
+            CreatedAt = DateTime.UtcNow;
+        }
 
         public void AddDomainEvent(INotification eventItem)
         {

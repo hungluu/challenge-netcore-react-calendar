@@ -8,7 +8,7 @@ namespace WebAPI.Infrastructure.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ShopLocation> locationConfiguration)
         {
-            locationConfiguration.ToTable("shop_locations", WebAPIContext.DEFAULT_SCHEMA);
+            locationConfiguration.ToTable("shop_locations", WebApiContext.DEFAULT_SCHEMA);
 
             locationConfiguration.HasKey(l => l.Id);
             locationConfiguration.Ignore(l => l.DomainEvents);

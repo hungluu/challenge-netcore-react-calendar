@@ -8,13 +8,13 @@ namespace WebAPI.Infrastructure.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<ShiftSetting> settingBuilder)
         {
-            settingBuilder.ToTable("shift_settings", WebAPIContext.DEFAULT_SCHEMA);
+            settingBuilder.ToTable("shift_settings", WebApiContext.DEFAULT_SCHEMA);
 
             settingBuilder.HasKey(s => s.Id);
             settingBuilder.Ignore(s => s.DomainEvents);
 
             settingBuilder.Property(s => s.Id)
-                .ForSqlServerUseSequenceHiLo("ship_settings_seq", WebAPIContext.DEFAULT_SCHEMA);
+                .ForSqlServerUseSequenceHiLo("ship_settings_seq", WebApiContext.DEFAULT_SCHEMA);
             settingBuilder.Property<string>("Rule")
                 .IsRequired();
             settingBuilder.Property<int>("Quantity")

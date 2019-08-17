@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace WebAPI.Infrastructure
 {
-    public class WebAPIContext : DbContext, IUnitOfWork
+    public class WebApiContext : DbContext, IUnitOfWork
     {
         public const string DEFAULT_SCHEMA = "EliteDemoSchema";
         public DbSet<Shop> Shops { get; set; }
@@ -23,7 +23,7 @@ namespace WebAPI.Infrastructure
         private IDbContextTransaction _currentTransaction;
         public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
 
-        public WebAPIContext(DbContextOptions<WebAPIContext> options, IMediator mediator) : base(options)
+        public WebApiContext(DbContextOptions<WebApiContext> options, IMediator mediator) : base(options)
         {
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
@@ -98,14 +98,14 @@ namespace WebAPI.Infrastructure
         }
     }
 
-    public class WebAPIContextDesignFactory : IDesignTimeDbContextFactory<WebAPIContext>
+    public class WebApiContextDesignFactory : IDesignTimeDbContextFactory<WebApiContext>
     {
-        public WebAPIContext CreateDbContext(string[] args)
+        public WebApiContext CreateDbContext(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<WebAPIContext>()
+            var optionsBuilder = new DbContextOptionsBuilder<WebApiContext>()
                 .UseSqlServer("Server=.;Initial Catalog=EliteDemoDB;Integrated Security=true");
 
-            return new WebAPIContext(optionsBuilder.Options, new NoMediator());
+            return new WebApiContext(optionsBuilder.Options, new NoMediator());
         }
 
         class NoMediator : IMediator

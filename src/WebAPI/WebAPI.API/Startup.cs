@@ -11,6 +11,7 @@ using Swashbuckle.AspNetCore.Swagger;
 using WebAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Microsoft.AspNetCore.Http;
 
 namespace WebAPI.API
 {
@@ -110,7 +111,7 @@ namespace WebAPI.API
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddEntityFrameworkSqlServer()
-                   .AddDbContext<WebAPIContext>(options =>
+                   .AddDbContext<WebApiContext>(options =>
                    {
                        options.UseSqlServer(configuration["ConnectionString"],
                            sqlServerOptionsAction: sqlOptions =>
@@ -121,6 +122,31 @@ namespace WebAPI.API
                    },
                        ServiceLifetime.Scoped  //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
                    );
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomConfiguration(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddOptions();
+            services.Configure<WebApiSettings>(configuration);
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.InvalidModelStateResponseFactory = context =>
+                {
+                    var problemDetails = new ValidationProblemDetails(context.ModelState)
+                    {
+                        Instance = context.HttpContext.Request.Path,
+                        Status = StatusCodes.Status400BadRequest,
+                        Detail = "Please refer to the errors property for additional details."
+                    };
+
+                    return new BadRequestObjectResult(problemDetails)
+                    {
+                        ContentTypes = { "application/problem+json", "application/problem+xml" }
+                    };
+                };
+            });
 
             return services;
         }

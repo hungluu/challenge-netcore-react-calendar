@@ -10,16 +10,21 @@ namespace WebAPI.Domain.Aggregates.ShopAggregate
         private readonly List<ShopLocation> _shopLocations;
         public IReadOnlyCollection<ShopLocation> ShopLocations => _shopLocations;
 
-        protected Shop()
+        protected Shop() : base()
         {
             _shopLocations = new List<ShopLocation>();
         }
 
-        public Shop(string shopName)
+        public Shop(string shopName) : this()
         {
             _name = shopName;
         }
 
         public string GetName() => _name;
+
+        public void AddLocation(string locationName)
+        {
+            _shopLocations.Add(new ShopLocation(locationName));
+        }
     }
 }

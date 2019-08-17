@@ -7,7 +7,7 @@ namespace WebAPI.Infrastructure
 {
     static class MediatorExtension
     {
-        public static async Task DispatchDomainEventsAsync(this IMediator mediator, WebAPIContext ctx)
+        public static async Task DispatchDomainEventsAsync(this IMediator mediator, WebApiContext ctx)
         {
             var domainEntities = ctx.ChangeTracker
                 .Entries<Entity>()

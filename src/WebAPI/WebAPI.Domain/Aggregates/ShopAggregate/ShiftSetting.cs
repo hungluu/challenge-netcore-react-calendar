@@ -11,7 +11,7 @@ namespace WebAPI.Domain.Aggregates.ShopAggregate
         {
         }
 
-        public ShiftSetting(string shiftRule, int shiftQuantity)
+        public ShiftSetting(string shiftRule, int shiftQuantity) : base()
         {
             _quantity = shiftQuantity;
             _rule = shiftRule;

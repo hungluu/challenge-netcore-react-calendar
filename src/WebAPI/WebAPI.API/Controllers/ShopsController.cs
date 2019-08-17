@@ -3,7 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.API.Application.Queries;
-using WebAPI.API.Infrastructure;
+using WebAPI.API.Infrastructure.ResponseModels;
 
 namespace WebAPI.API.Controllers
 {
@@ -20,8 +20,8 @@ namespace WebAPI.API.Controllers
 
         // GET api/shops
         [HttpGet]
-        [ProducesResponseType(typeof(RestSuccessViewModel<List<ShopViewModel>>), (int)HttpStatusCode.OK)]
-        public async Task<RestSuccessViewModel<List<ShopViewModel>>> Get()
+        [ProducesResponseType(typeof(ShopListResponseModel), (int)HttpStatusCode.OK)]
+        public async Task<RestListResponseModel<List<ShopViewModel>>> Get()
         {
             List<ShopViewModel> shops;
 
@@ -34,10 +34,7 @@ namespace WebAPI.API.Controllers
                 shops = new List<ShopViewModel>();
             }
 
-            return new RestSuccessViewModel<List<ShopViewModel>>
-            {
-                data = shops
-            };
+            return new ShopListResponseModel(shops);
         }
     }
 }

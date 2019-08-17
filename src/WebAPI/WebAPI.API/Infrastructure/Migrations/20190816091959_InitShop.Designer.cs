@@ -9,7 +9,7 @@ using WebAPI.Infrastructure;
 
 namespace WebAPI.Infrastructure.Migrations
 {
-    [DbContext(typeof(WebAPIContext))]
+    [DbContext(typeof(WebApiContext))]
     [Migration("20190816091959_InitShop")]
     partial class InitShop
     {
