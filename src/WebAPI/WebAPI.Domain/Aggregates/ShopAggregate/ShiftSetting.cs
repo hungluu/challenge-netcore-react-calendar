@@ -6,18 +6,21 @@ namespace WebAPI.Domain.Aggregates.ShopAggregate
     {
         private int _quantity;
         private string _rule;
+        private int _locationId;
 
-        protected ShiftSetting()
+        private ShiftSetting()
         {
         }
 
-        public ShiftSetting(string shiftRule, int shiftQuantity) : base()
+        public ShiftSetting(string shiftRule, int shiftQuantity, int locationId) : base()
         {
             _quantity = shiftQuantity;
             _rule = shiftRule;
+            _locationId = locationId;
         }
 
         public string GetRule() => _rule;
         public int GetQuantity() => _quantity;
+        public int GetLocationId() => _locationId;
     }
 }

@@ -10,9 +10,13 @@ namespace WebAPI.Domain.Aggregates.ShopAggregate
         private readonly List<ShopLocation> _shopLocations;
         public IReadOnlyCollection<ShopLocation> ShopLocations => _shopLocations;
 
+        private List<ShiftSetting> _shiftSettings;
+        public IReadOnlyCollection<ShiftSetting> ShiftSettings => _shiftSettings;
+
         protected Shop() : base()
         {
             _shopLocations = new List<ShopLocation>();
+            _shiftSettings = new List<ShiftSetting>();
         }
 
         public Shop(string shopName) : this()
@@ -25,6 +29,11 @@ namespace WebAPI.Domain.Aggregates.ShopAggregate
         public void AddLocation(string locationName)
         {
             _shopLocations.Add(new ShopLocation(locationName));
+        }
+
+        public void AddShiftSetting(string rule, int quantity, int locationId)
+        {
+            _shiftSettings.Add(new ShiftSetting(rule, quantity, locationId));
         }
     }
 }

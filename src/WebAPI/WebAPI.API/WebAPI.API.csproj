@@ -20,8 +20,4 @@
     <ProjectReference Include="..\WebAPI.Infrastructure\WebAPI.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Application\Commands\" />
-  </ItemGroup>
-
 </Project>

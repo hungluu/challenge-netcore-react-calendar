@@ -1,9 +1,14 @@
 ﻿using Autofac;
+using System.Reflection;
+using WebAPI.API.Application.Commands;
 using WebAPI.API.Application.Queries;
+using WebAPI.Domain.Aggregates.ShopAggregate;
+using WebAPI.Infrastructure.Idempotency;
+using WebAPI.Infrastructure.Repositories;
 
 namespace WebAPI.API.Infrastructure.AutofacModules
 {
-    public class ApplicationModule: Module
+    public class ApplicationModule: Autofac.Module
     {
 
         public string QueriesConnectionString { get; }
@@ -11,7 +16,6 @@ namespace WebAPI.API.Infrastructure.AutofacModules
         public ApplicationModule(string qconstr)
         {
             QueriesConnectionString = qconstr;
-
         }
 
         protected override void Load(ContainerBuilder builder)
@@ -21,13 +25,16 @@ namespace WebAPI.API.Infrastructure.AutofacModules
                 .As<IShopQueries>()
                 .InstancePerLifetimeScope();
 
-            //builder.RegisterType<RequestManager>()
-            //   .As<IRequestManager>()
-            //   .InstancePerLifetimeScope();
+            builder.RegisterType<ShopRepository>()
+                .As<IShopRepository>()
+                .InstancePerLifetimeScope();
 
-            //builder.RegisterAssemblyTypes(typeof(CreateOrderCommandHandler).GetTypeInfo().Assembly)
-            //    .AsClosedTypesOf(typeof(IIntegrationEventHandler<>));
+            builder.RegisterType<RequestManager>()
+               .As<IRequestManager>()
+               .InstancePerLifetimeScope();
 
+            builder.RegisterAssemblyTypes(typeof(CreateShiftSettingCommandHandler).GetTypeInfo().Assembly)
+                .AsClosedTypesOf(typeof(IIntegrationEventHandler<>));
         }
     }
 }

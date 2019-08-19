@@ -17,11 +17,6 @@ namespace WebAPI.API.Application.Queries
                 : throw new ArgumentNullException(nameof(constr));
         }
 
-        public Task<ShopLocationViewModel> GetLocationAsync(int locationId)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<List<ShopLocationViewModel>> GetShopLocationsFromShopAsync(int shopId)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -48,6 +43,32 @@ namespace WebAPI.API.Application.Queries
                 var results = await connection.QueryAsync<ShopViewModel>(
                     @"SELECT s.[Id] as Id, s.[Name] as Name
                         FROM [EliteDemoSchema].[shops] s"
+                );
+
+                return results.AsList();
+            }
+        }
+
+        public async Task<List<ShiftSettingViewModel>> GetShopShiftSettingsAsync(int shopId, int? locationId = null)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var query = @"SELECT st.[Quantity] as Quantity,
+                            st.[Rule] as Rules,
+                            st.[LocationId] as LocationId
+                        FROM [EliteDemoSchema].[shift_settings] st
+                        WHERE st.[ShopId] = @shopId";
+
+                if (locationId != null)
+                {
+                    query += " AND st.[LocationId] = @locationId ";
+                }
+
+                var results = await connection.QueryAsync<ShiftSettingViewModel>(
+                    query,
+                    new { shopId, locationId }
                 );
 
                 return results.AsList();

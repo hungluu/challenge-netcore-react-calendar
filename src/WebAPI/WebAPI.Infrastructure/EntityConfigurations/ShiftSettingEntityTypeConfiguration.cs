@@ -19,6 +19,8 @@ namespace WebAPI.Infrastructure.EntityConfigurations
                 .IsRequired();
             settingBuilder.Property<int>("Quantity")
                 .IsRequired();
+            settingBuilder.Property<int>("LocationId")
+                .IsRequired();
         }
     }
 }

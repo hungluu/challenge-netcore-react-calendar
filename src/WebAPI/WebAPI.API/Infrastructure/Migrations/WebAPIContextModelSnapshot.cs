@@ -32,24 +32,18 @@ namespace WebAPI.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<int?>("CreatedBy");
-
-                    b.Property<DateTime?>("DeletedAt");
+                    b.Property<int>("LocationId");
 
                     b.Property<int>("Quantity");
 
                     b.Property<string>("Rule")
                         .IsRequired();
 
-                    b.Property<int?>("ShopLocationId");
-
-                    b.Property<DateTime?>("UpdatedAt");
-
-                    b.Property<int?>("UpdatedBy");
+                    b.Property<int?>("ShopId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ShopLocationId");
+                    b.HasIndex("ShopId");
 
                     b.ToTable("shift_settings","EliteDemoSchema");
                 });
@@ -64,16 +58,8 @@ namespace WebAPI.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<int?>("CreatedBy");
-
-                    b.Property<DateTime?>("DeletedAt");
-
                     b.Property<string>("Name")
                         .IsRequired();
-
-                    b.Property<DateTime?>("UpdatedAt");
-
-                    b.Property<int?>("UpdatedBy");
 
                     b.HasKey("Id");
 
@@ -89,18 +75,10 @@ namespace WebAPI.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<int?>("CreatedBy");
-
-                    b.Property<DateTime?>("DeletedAt");
-
                     b.Property<string>("Name")
                         .IsRequired();
 
                     b.Property<int?>("ShopId");
-
-                    b.Property<DateTime?>("UpdatedAt");
-
-                    b.Property<int?>("UpdatedBy");
 
                     b.HasKey("Id");
 
@@ -111,9 +89,9 @@ namespace WebAPI.Infrastructure.Migrations
 
             modelBuilder.Entity("WebAPI.Domain.Aggregates.ShopAggregate.ShiftSetting", b =>
                 {
-                    b.HasOne("WebAPI.Domain.Aggregates.ShopAggregate.ShopLocation")
+                    b.HasOne("WebAPI.Domain.Aggregates.ShopAggregate.Shop")
                         .WithMany("ShiftSettings")
-                        .HasForeignKey("ShopLocationId");
+                        .HasForeignKey("ShopId");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Aggregates.ShopAggregate.ShopLocation", b =>

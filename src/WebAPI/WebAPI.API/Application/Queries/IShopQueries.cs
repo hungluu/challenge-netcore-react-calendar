@@ -9,6 +9,6 @@ namespace WebAPI.API.Application.Queries
 
         Task<List<ShopLocationViewModel>> GetShopLocationsFromShopAsync(int shopId);
 
-        Task<ShopLocationViewModel> GetLocationAsync(int locationId);
+        Task<List<ShiftSettingViewModel>> GetShopShiftSettingsAsync(int shopId, int? locationId = null);
     }
 }

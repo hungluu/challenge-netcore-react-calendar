@@ -19,5 +19,6 @@ namespace WebAPI.API.Application.Queries
     {
         public string Rule { get; set; }
         public int Quantity { get; set; }
+        public int LocationId { get; set; }
     }
 }

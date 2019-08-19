@@ -5,8 +5,8 @@ namespace WebAPI.Domain.Aggregates.ShopAggregate
 {
     public interface IShopRepository : IRepository<Shop>
     {
-        Shop Add(Shop Shop);
-        Shop Update(Shop Shop);
-        Task<Shop> FindAsync(string id);
+        Shop Add(Shop shop);
+        void Update(Shop shop);
+        Task<Shop> GetAsync(int shopId);
     }
 }

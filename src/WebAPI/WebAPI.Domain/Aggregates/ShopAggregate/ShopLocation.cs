@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using WebAPI.Domain.Seedworks;
+﻿using WebAPI.Domain.Seedworks;
 
 namespace WebAPI.Domain.Aggregates.ShopAggregate
 {
@@ -8,15 +6,11 @@ namespace WebAPI.Domain.Aggregates.ShopAggregate
     {
         private string _name;
 
-        private readonly List<ShiftSetting> _shiftSettings;
-        public IReadOnlyCollection<ShiftSetting> ShiftSettings => _shiftSettings;
-
-        protected ShopLocation() : base()
+        private ShopLocation()
         {
-            _shiftSettings = new List<ShiftSetting>();
         }
 
-        public ShopLocation(string locationName) : this()
+        public ShopLocation(string locationName) : base()
         {
             _name = locationName;
         }

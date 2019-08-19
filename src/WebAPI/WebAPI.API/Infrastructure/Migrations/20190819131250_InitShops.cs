@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WebAPI.Infrastructure.Migrations
 {
-    public partial class InitShop : Migration
+    public partial class InitShops : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,15 +31,35 @@ namespace WebAPI.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: true),
-                    DeletedAt = table.Column<DateTime>(nullable: true),
-                    CreatedBy = table.Column<int>(nullable: true),
-                    UpdatedBy = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_shops", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "shift_settings",
+                schema: "EliteDemoSchema",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    LocationId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    Rule = table.Column<string>(nullable: false),
+                    ShopId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_shift_settings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_shift_settings_shops_ShopId",
+                        column: x => x.ShopId,
+                        principalSchema: "EliteDemoSchema",
+                        principalTable: "shops",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -49,10 +69,6 @@ namespace WebAPI.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: true),
-                    DeletedAt = table.Column<DateTime>(nullable: true),
-                    CreatedBy = table.Column<int>(nullable: true),
-                    UpdatedBy = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: false),
                     ShopId = table.Column<int>(nullable: true)
                 },
@@ -68,38 +84,11 @@ namespace WebAPI.Infrastructure.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "shift_settings",
-                schema: "EliteDemoSchema",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: true),
-                    DeletedAt = table.Column<DateTime>(nullable: true),
-                    CreatedBy = table.Column<int>(nullable: true),
-                    UpdatedBy = table.Column<int>(nullable: true),
-                    Quantity = table.Column<int>(nullable: false),
-                    Rule = table.Column<string>(nullable: false),
-                    ShopLocationId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_shift_settings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_shift_settings_shop_locations_ShopLocationId",
-                        column: x => x.ShopLocationId,
-                        principalSchema: "EliteDemoSchema",
-                        principalTable: "shop_locations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_shift_settings_ShopLocationId",
+                name: "IX_shift_settings_ShopId",
                 schema: "EliteDemoSchema",
                 table: "shift_settings",
-                column: "ShopLocationId");
+                column: "ShopId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_shop_locations_ShopId",
