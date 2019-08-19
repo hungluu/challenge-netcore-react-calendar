@@ -18,23 +18,23 @@ namespace WebAPI.API.Controllers
             _shopQueries = shopQueries;
         }
 
-        // GET api/shops
         [HttpGet]
         [ProducesResponseType(typeof(ShopListResponseModel), (int)HttpStatusCode.OK)]
-        public async Task<RestListResponseModel<List<ShopViewModel>>> Get()
+        public async Task<ShopListResponseModel> Get()
         {
             List<ShopViewModel> shops;
 
-            try
-            {
-                shops = await _shopQueries.GetShopsAsync();
-            }
-            catch
-            {
-                shops = new List<ShopViewModel>();
-            }
+            return new ShopListResponseModel(await _shopQueries.GetShopsAsync());
+        }
 
-            return new ShopListResponseModel(shops);
+        [Route("{shopId:int}/locations")]
+        [HttpGet]
+        [ProducesResponseType(typeof(ShopLocationListResponseModel), (int)HttpStatusCode.OK)]
+        public async Task<ShopLocationListResponseModel> GetShopLocations(int shopId)
+        {
+            List<ShopViewModel> shops;
+
+            return new ShopLocationListResponseModel(await _shopQueries.GetShopLocationsFromShopAsync(shopId));
         }
     }
 }

@@ -7,7 +7,7 @@ namespace WebAPI.API.Application.Queries
     {
         Task<List<ShopViewModel>> GetShopsAsync();
 
-        Task<ShopLocationViewModel> GetShopLocationsFromShopAsync(int shopId);
+        Task<List<ShopLocationViewModel>> GetShopLocationsFromShopAsync(int shopId);
 
         Task<ShopLocationViewModel> GetLocationAsync(int locationId);
     }

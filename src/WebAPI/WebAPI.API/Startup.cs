@@ -12,6 +12,7 @@ using WebAPI.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace WebAPI.API
 {
@@ -85,6 +86,10 @@ namespace WebAPI.API
                 //options.Filters.Add(typeof(HttpGlobalExceptionFilter));
             })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                })
                 .AddControllersAsServices();  //Injecting Controllers themselves thru DI
                                               //For further info see: http://docs.autofac.org/en/latest/integration/aspnetcore.html#controllers-as-services
 

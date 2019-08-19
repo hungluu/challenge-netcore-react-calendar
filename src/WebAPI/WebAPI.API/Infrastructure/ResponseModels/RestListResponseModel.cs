@@ -15,7 +15,6 @@ namespace WebAPI.API.Infrastructure.ResponseModels
             meta = new {
                 total = data.Count
             };
-            links = new { };
             code = 200;
         }
     }

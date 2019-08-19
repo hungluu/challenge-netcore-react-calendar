@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebAPI", "WebAPI", "{47078381-A10E-4918-9236-830FF96CD865}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.API", "src\WebAPI\WebAPI.API\WebAPI.API.csproj", "{3A9A9924-3012-4BEA-A21B-980CBD4841AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.API", "src\WebAPI\WebAPI.API\WebAPI.API.csproj", "{3A9A9924-3012-4BEA-A21B-980CBD4841AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Domain", "src\WebAPI\WebAPI.Domain\WebAPI.Domain.csproj", "{67F391C7-1B90-4786-ACEA-3A4CBFFBB29E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Domain", "src\WebAPI\WebAPI.Domain\WebAPI.Domain.csproj", "{67F391C7-1B90-4786-ACEA-3A4CBFFBB29E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.Infrastructure", "src\WebAPI\WebAPI.Infrastructure\WebAPI.Infrastructure.csproj", "{ED50F033-F3F4-4478-A78B-5F3B2DDA0E4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Infrastructure", "src\WebAPI\WebAPI.Infrastructure\WebAPI.Infrastructure.csproj", "{ED50F033-F3F4-4478-A78B-5F3B2DDA0E4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portal", "Portal", "{227F1BED-6A2F-4D8D-840A-4AF53E02B721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

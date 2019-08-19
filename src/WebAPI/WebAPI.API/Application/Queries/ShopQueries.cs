@@ -22,9 +22,21 @@ namespace WebAPI.API.Application.Queries
             throw new NotImplementedException();
         }
 
-        public Task<ShopLocationViewModel> GetShopLocationsFromShopAsync(int shopId)
+        public async Task<List<ShopLocationViewModel>> GetShopLocationsFromShopAsync(int shopId)
         {
-            throw new NotImplementedException();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var results = await connection.QueryAsync<ShopLocationViewModel>(
+                    @"SELECT l.[Id] as Id, l.[Name] as Name
+                        FROM [EliteDemoSchema].[shop_locations] l
+                        WHERE l.ShopId = @shopId",
+                    new { shopId }
+                );
+
+                return results.AsList();
+            }
         }
 
         public async Task<List<ShopViewModel>> GetShopsAsync()
@@ -33,10 +45,12 @@ namespace WebAPI.API.Application.Queries
             {
                 connection.Open();
 
-                return new List<ShopViewModel>(await connection.QueryAsync<ShopViewModel>(
+                var results = await connection.QueryAsync<ShopViewModel>(
                     @"SELECT s.[Id] as Id, s.[Name] as Name
-                    FROM [Shops] s"
-                ));
+                        FROM [EliteDemoSchema].[shops] s"
+                );
+
+                return results.AsList();
             }
         }
     }
