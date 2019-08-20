@@ -5,16 +5,16 @@ using WebAPI.Domain.Aggregates.ShopAggregate;
 
 namespace WebAPI.API.Application.Commands
 {
-    public class CreateShiftSettingCommandHandler : IRequestHandler<CreateShiftSettingCommand, bool>
+    public class UpdateShiftSettingsCommandHandler : IRequestHandler<UpdateShiftSettingsCommand, bool>
     {
         private readonly IShopRepository _shopRepository;
 
-        public CreateShiftSettingCommandHandler(IShopRepository shopRepository)
+        public UpdateShiftSettingsCommandHandler(IShopRepository shopRepository)
         {
             _shopRepository = shopRepository;
         }
 
-        public async Task<bool> Handle(CreateShiftSettingCommand command, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateShiftSettingsCommand command, CancellationToken cancellationToken)
         {
             var shopId = command.ShopId;
             var shop = await _shopRepository.GetAsync(shopId);
@@ -26,14 +26,19 @@ namespace WebAPI.API.Application.Commands
 
             foreach (var setting in command.ShiftSettings)
             {
-                if (setting.Id == null || setting.Id == 0)
+                int? settingId = setting.Id;
+                if (setting.IsDeleted)
+                {
+                    shop.RemoveShiftSetting(setting.Id);
+                }
+                else
                 {
                     shop.AddShiftSetting(setting.Rule, setting.Quantity, setting.LocationId);
                 }
             }
 
-            // for the simpleness of demonstration
-            // instead of trigger domain events
+            // for the simplicity of demonstration
+            // instead of triggering domain events
             // data will be saved directly inside event handler
             return await _shopRepository.UnitOfWork
                 .SaveChangesAsync() > 0;

@@ -55,7 +55,9 @@ namespace WebAPI.API.Application.Queries
             {
                 connection.Open();
 
-                var query = @"SELECT st.[Quantity] as Quantity,
+                var query = @"SELECT
+                            st.[Id] as Id,
+                            st.[Quantity] as Quantity,
                             st.[Rule] as Rules,
                             st.[LocationId] as LocationId
                         FROM [EliteDemoSchema].[shift_settings] st

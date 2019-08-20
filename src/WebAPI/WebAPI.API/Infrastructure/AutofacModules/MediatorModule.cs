@@ -13,7 +13,7 @@ namespace WebAPI.API.Infrastructure.AutofacModules
                 .AsImplementedInterfaces();
 
             // Register all the Command classes (they implement IRequestHandler) in assembly holding the Commands
-            builder.RegisterAssemblyTypes(typeof(CreateShiftSettingCommandHandler).GetTypeInfo().Assembly)
+            builder.RegisterAssemblyTypes(typeof(UpdateShiftSettingsCommandHandler).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             // Register the Command's Validators (Validators based on FluentValidation library)

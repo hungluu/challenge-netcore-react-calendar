@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using WebAPI.API.Infrastructure.Filters;
 
 namespace WebAPI.API
 {
@@ -82,9 +83,10 @@ namespace WebAPI.API
         {
             // Add framework services.
             services.AddMvc(options =>
-            {
-                //options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-            })
+                {
+                    options.Filters.Add(typeof(HttpExceptionFilter));
+                    options.Filters.Add(typeof(HttpActionFilter));
+                })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(options =>
                 {

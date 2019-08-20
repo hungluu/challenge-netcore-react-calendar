@@ -35,5 +35,15 @@ namespace WebAPI.Domain.Aggregates.ShopAggregate
         {
             _shiftSettings.Add(new ShiftSetting(rule, quantity, locationId));
         }
+
+        public void RemoveShiftSetting(int id)
+        {
+            var setting = _shiftSettings.Find(st => st.Id == id);
+
+            if (setting != null)
+            {
+                _shiftSettings.Remove(setting);
+            }
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace WebAPI.API.Infrastructure.AutofacModules
                .As<IRequestManager>()
                .InstancePerLifetimeScope();
 
-            builder.RegisterAssemblyTypes(typeof(CreateShiftSettingCommandHandler).GetTypeInfo().Assembly)
+            builder.RegisterAssemblyTypes(typeof(UpdateShiftSettingsCommandHandler).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(IIntegrationEventHandler<>));
         }
     }

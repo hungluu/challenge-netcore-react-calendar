@@ -5,7 +5,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.API.Application.Commands;
 using WebAPI.API.Application.Queries;
-using WebAPI.API.Infrastructure.ResponseModels;
 
 namespace WebAPI.API.Controllers
 {
@@ -23,42 +22,38 @@ namespace WebAPI.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ShopListResponseModel), (int)HttpStatusCode.OK)]
-        public async Task<ShopListResponseModel> Get()
+        [ProducesResponseType(typeof(List<ShopViewModel>), (int)HttpStatusCode.OK)]
+        public async Task<List<ShopViewModel>> Get()
         {
-            return new ShopListResponseModel(await _shopQueries.GetShopsAsync());
+            return await _shopQueries.GetShopsAsync();
         }
 
         [Route("{shopId:int}/locations")]
         [HttpGet]
-        [ProducesResponseType(typeof(ShopLocationListResponseModel), (int)HttpStatusCode.OK)]
-        public async Task<ShopLocationListResponseModel> GetLocations(int shopId)
+        [ProducesResponseType(typeof(List<ShopLocationViewModel>), (int)HttpStatusCode.OK)]
+        public async Task<List<ShopLocationViewModel>> GetLocations(int shopId)
         {
-            return new ShopLocationListResponseModel(await _shopQueries.GetShopLocationsFromShopAsync(shopId));
+            return await _shopQueries.GetShopLocationsFromShopAsync(shopId);
         }
 
         [Route("{shopId:int}/shift_settings")]
         [HttpGet]
-        [ProducesResponseType(typeof(ShiftSettingListResponseModel), (int)HttpStatusCode.OK)]
-        public async Task<ShiftSettingListResponseModel> GetShiftSettngs(int shopId)
+        [ProducesResponseType(typeof(List<ShiftSettingViewModel>), (int)HttpStatusCode.OK)]
+        public async Task<List<ShiftSettingViewModel>> GetShiftSettngs(int shopId)
         {
-            return new ShiftSettingListResponseModel(await _shopQueries.GetShopShiftSettingsAsync(shopId));
+            return await _shopQueries.GetShopShiftSettingsAsync(shopId);
         }
 
         [Route("{shopId:int}/shift_settings")]
         [HttpPatch]
-        [ProducesResponseType(typeof(IActionResult), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> CreateShiftSettngs([FromBody]List<ShiftSettingDTO> shiftSettings, int shopId)
+        public async Task<object> CreateShiftSettngs([FromBody]List<ShiftSettingViewModel> shiftSettings, int shopId)
         {
-            bool commandResult = await _mediator.Send(new CreateShiftSettingCommand(shopId, shiftSettings));
+            bool commandResult = await _mediator.Send(new UpdateShiftSettingsCommand(shopId, shiftSettings));
 
-
-            if (!commandResult)
+            return new
             {
-                return BadRequest();
-            }
-
-            return Ok();
+                Updated = commandResult
+            };
         }
     }
 }

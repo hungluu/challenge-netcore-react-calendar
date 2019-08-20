@@ -10,7 +10,7 @@ using WebAPI.Infrastructure;
 namespace WebAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(WebApiContext))]
-    [Migration("20190819131250_InitShops")]
+    [Migration("20190820100207_InitShops")]
     partial class InitShops
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
