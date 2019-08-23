@@ -6,10 +6,10 @@ const defaultState = {
     shiftSettings: []
 }
 
-const ShopsReducer = handleActions({
+const ShiftsReducer = handleActions({
     //[actions.UPDATE_MESSAGE]: (state, action) => assign({}, state, {
     //    message: action.payload
     //})
 }, defaultState)
 
-export default ShopsReducer
+export default ShiftsReducer

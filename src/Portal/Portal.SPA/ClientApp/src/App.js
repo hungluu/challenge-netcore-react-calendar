@@ -4,7 +4,7 @@ import './App.scss'
 
 const loading = () => <div className="animated fadeIn pt-3 text-center">Loading...</div>
 
-const DefaultLayout = React.lazy(() => import('./common/DefaultLayout'))
+const DefaultLayout = React.lazy(() => import('./common/components/DefaultLayout'))
 const Login = React.lazy(() => import('./dashboard/Login'))
 
 class App extends Component {

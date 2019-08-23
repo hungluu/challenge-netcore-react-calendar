@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import AppStore from './config/store'
+import AppStore from './common/config/store'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 

@@ -1,0 +1,20 @@
+﻿.react-datepicker__time-container, .react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box {
+    width: 100px;
+}
+
+.react-datepicker__range-container {
+    .react-datepicker-wrapper {
+        margin-right: 1em;
+        margin-bottom: 0.5em;
+    }
+
+    .react-datepicker-wrapper:last-child {
+        margin-bottom: 0;
+    }
+
+    @media only screen and (min-width: 768px) {
+        & .react-datepicker-wrapper {
+            margin-bottom: 0;
+        }
+    }
+}

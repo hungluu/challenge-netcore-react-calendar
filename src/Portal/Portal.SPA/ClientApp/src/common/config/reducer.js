@@ -2,7 +2,7 @@
 import { handleActions } from 'redux-actions'
 import { routerReducer } from 'react-router-redux'
 
-import ShopsReducer from '../shifts/config/reducer'
+import ShopsReducer from '../../shifts/config/reducer'
 
 const defaultState = {}
 
