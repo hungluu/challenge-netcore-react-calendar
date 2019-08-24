@@ -6,8 +6,13 @@ export default {
             icon: 'icon-calendar',
             children: [
                 {
-                    name: 'Settings',
+                    name: 'Calendar',
                     url: '/dashboard',
+                    icon: 'nav-icon fa fa-calendar'
+                },
+                {
+                    name: 'Settings',
+                    url: '/shifts/settings',
                     icon: 'nav-icon cui-cog',
                 }
             ]

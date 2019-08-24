@@ -84,50 +84,46 @@ class ShiftSettings extends Component {
 
     render () {
         return <div className="animated fadeIn">
-            <Row>
-                <Col xs="12">
-                    <Card>
-                        <CardBody>
-                            <Row>
-                                <Col xs="12" sm="6">
-                                    <FormGroup>
-                                        <Label htmlFor="shift-settings-shop-selection">Shop</Label>
-                                        <Input type="select"
-                                            name="select"
-                                            id="shift-settings-shop-selection"
-                                            className="form-control"
-                                            disabled={!this.state.shops.length}
-                                            value={this.state.shopId}
-                                            onChange={({ target: { value } }) => this.selectShop(parseInt(value))}>
-                                            {map(this.state.shops, shop => {
-                                                return <option value={shop.id} key={shop.id}>{shop.name}</option>
-                                            })}
-                                        </Input>
-                                    </FormGroup>
-                                </Col>
-                                <Col xs="12" sm="6">
-                                    <FormGroup>
-                                        <Label htmlFor="shift-settings-location-selection">Location</Label>
-                                        <Input type="select" name="select" id="shift-settings-location-selection" className="form-control" disabled={!this.state.locations.length}>
-                                            {map(this.state.locations, location => {
-                                                return <option value={location.id} key={location.id}>{location.name}</option>
-                                            })}
-                                        </Input>
-                                    </FormGroup>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <Button type="reset" color="primary" onClick={() => this.saveShiftSettings()}><i className="fa fa-check-circle-o"></i> Save</Button>
-                                </Col>
-                                <Col>
-                                    <Button className="pull-right" type="reset" color="success" onClick={() => this.addNewShiftSetting()}><i className="fa fa-plus"></i> Add new</Button>
-                                </Col>
-                            </Row>
-                        </CardBody>
-                    </Card>
-                </Col>
-            </Row>
+            <Card>
+                <CardBody>
+                    <Row>
+                        <Col xs="12" sm="6">
+                            <FormGroup>
+                                <Label htmlFor="shift-settings-shop-selection">Shop</Label>
+                                <Input type="select"
+                                    name="select"
+                                    id="shift-settings-shop-selection"
+                                    className="form-control"
+                                    disabled={!this.state.shops.length}
+                                    value={this.state.shopId}
+                                    onChange={({ target: { value } }) => this.selectShop(parseInt(value))}>
+                                    {map(this.state.shops, shop => {
+                                        return <option value={shop.id} key={shop.id}>{shop.name}</option>
+                                    })}
+                                </Input>
+                            </FormGroup>
+                        </Col>
+                        <Col xs="12" sm="6">
+                            <FormGroup>
+                                <Label htmlFor="shift-settings-location-selection">Location</Label>
+                                <Input type="select" name="select" id="shift-settings-location-selection" className="form-control" disabled={!this.state.locations.length}>
+                                    {map(this.state.locations, location => {
+                                        return <option value={location.id} key={location.id}>{location.name}</option>
+                                    })}
+                                </Input>
+                            </FormGroup>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Button type="reset" color="primary" onClick={() => this.saveShiftSettings()}><i className="fa fa-check-circle-o"></i> Save</Button>
+                        </Col>
+                        <Col>
+                            <Button className="pull-right" type="reset" color="success" onClick={() => this.addNewShiftSetting()}><i className="fa fa-plus"></i> Add new</Button>
+                        </Col>
+                    </Row>
+                </CardBody>
+            </Card>
 
             {map(filter(this.state.settings, ['isDeleted', false]), setting =>
                 <ShiftSettingItem
