@@ -1,4 +1,4 @@
-﻿import { map, find } from 'lodash'
+import { map, find } from 'lodash'
 
 const testShops = [
     {
@@ -32,6 +32,12 @@ const testShops = [
 ]
 
 const ShopService = {
+    async updateShiftSettings (shopId, locationId, shiftSettings) {
+        console.log({
+            shopId, locationId, shiftSettings
+        })
+    },
+
     async getShops() {
         return this.mapShopViewModels(testShops)
     },

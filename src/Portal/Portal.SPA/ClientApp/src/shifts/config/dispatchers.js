@@ -1,4 +1,4 @@
-﻿import {
+import {
     UPDATE_MESSAGE
 } from './actions'
 

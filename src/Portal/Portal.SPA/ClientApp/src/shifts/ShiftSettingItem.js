@@ -1,5 +1,5 @@
-﻿import React, { useState } from 'react'
-import { upperFirst, map } from 'lodash'
+import React, { Component } from 'react'
+import { upperFirst, map, assign, get } from 'lodash'
 import { StyleSheet, css } from 'aphrodite'
 import * as PropTypes from 'prop-types'
 import {
@@ -11,75 +11,116 @@ import {
     Input,
     Button
 } from 'reactstrap'
-import { DatePicker } from './config/lib'
+import { TimeRangePicker, DateRangePicker, ShiftService } from './config/lib'
+import dayjs from 'dayjs'
 
-const ShiftSettingItem = (props) => {
-    const setting = props.setting
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
-    const [startTime, setStartTime] = useState(null)
-    const [endTime, setEndTime] = useState(null)
-    const key = props.key || 'new'
-    const daysOfWeek = {
-        monday: true,
-        tuesday: true,
-        wednesday: true,
-        thursday: true,
-        friday: true,
-        saturday: true,
-        sunday: true
+class ShiftSettingItem extends Component {
+    constructor (props) {
+        super(props)
+
+        const { rule: ruleString } = props.data
+        const rule = ShiftService.getRuleObject(ruleString)
+        this.state = {
+            dateRange: {
+                start: get(rule, 'dtstart', null),
+                end: get(rule, 'until', null)
+            },
+            timeRange: {
+                start: get(rule, 'dtstart', null),
+                end: get(rule, 'until', null)
+            },
+            weekDays: ShiftService.getWeekDays(ruleString)
+        }
     }
 
-    return (
-        <Card>
+    setDateRange (range) {
+        this.setState({
+            dateRange: range
+        }, () => this.syncValues())
+    }
+
+    setTimeRange (range) {
+        this.setState({
+            timeRange: range
+        }, () => this.syncValues())
+    }
+
+    setDayOfWeek (dayId, value) {
+        this.setState((state) => {
+            return assign({}, state, {
+                weekDays: assign({}, state.weekDays, {
+                    [dayId]: !!value // convert to boolean
+                })
+            })
+        }, () => this.syncValues())
+    }
+
+    syncValues () {
+        let startDate = null
+        let endDate = null
+        let startDateStr,
+            endDateStr
+
+        if (this.state.dateRange.start) {
+            startDateStr = dayjs(this.state.dateRange.start).format('MM/DD/YYYY')
+
+            if (this.state.timeRange.start) {
+                startDateStr += ' ' + dayjs(this.state.timeRange.start).format('HH:mm')
+            }
+
+            startDate = dayjs(startDateStr).toDate()
+        }
+
+        if (this.state.dateRange.end) {
+            endDateStr = dayjs(this.state.dateRange.end).format('MM/DD/YYYY')
+
+            if (this.state.timeRange.end) {
+                endDateStr += ' ' + dayjs(this.state.timeRange.end).format('HH:mm')
+            }
+
+            endDate = dayjs(endDateStr).toDate()
+        }
+
+        this.props.onChange(assign({}, this.props.data, {
+            rule: ShiftService.getRuleString({
+                dtstart: startDate,
+                until: endDate,
+                byweekday: ShiftService.getWeekDayValues(this.state.weekDays)
+            })
+        }))
+    }
+
+    render () {
+        const key = this.key || 'new'
+        const identifier = `shift-setting-item-${key}`
+        const { data, onDelete } = this.props
+
+        return <Card>
             <CardBody>
                 <div className="pull-right">
-                    <Button type="reset" size="sm" color="danger" onClick={() => props.onDelete(setting)}><i className="fa fa-trash"></i></Button>
+                    <Button type="reset" size="sm" color="danger" onClick={() => onDelete(data)}><i className="fa fa-trash"></i></Button>
+                </div>
+                <div>
+                    #{identifier}
                 </div>
                 <FormGroup row>
                     <Col className={css(ShiftSettingItemStyles.label)}>
-                        Date Range #{setting.id}
+                        Date Range
                     </Col>
-                    <Col className="react-datepicker__range-container">
-                        <DatePicker
-                            selected={startDate}
-                            onChange={setStartDate}
-                            placeholderText="From date"
-                        />
-
-                        <DatePicker
-                            selected={endDate}
-                            onChange={setEndDate}
-                            placeholderText="To date"
-                        />
+                    <Col>
+                        <DateRangePicker data={this.state.dateRange} onChange={range => {
+                            this.setDateRange(range)
+                        }} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
                     <Col className={css(ShiftSettingItemStyles.label)}>
                         Working hours
-                            </Col>
-                    <Col className="react-datepicker__range-container">
-                        <DatePicker
-                            selected={startTime}
-                            onChange={setStartTime}
-                            placeholderText="Start time"
-                            showTimeSelect
-                            showTimeSelectOnly
-                            timeIntervals={30}
-                            dateFormat="h:mm aa"
-                            timeCaption="Time"
-                        />
-
-                        <DatePicker
-                            selected={endTime}
-                            onChange={setEndTime}
-                            placeholderText="End time"
-                            showTimeSelect
-                            showTimeSelectOnly
-                            timeIntervals={30}
-                            dateFormat="h:mm aa"
-                            timeCaption="Time"
-                        />
+                    </Col>
+                    <Col>
+                        <TimeRangePicker data={this.state.timeRange} onChange={range => {
+                            this.setTimeRange(range)
+                        }} />
                     </Col>
                 </FormGroup>
                 <FormGroup row>
@@ -87,11 +128,13 @@ const ShiftSettingItem = (props) => {
                         Days of week
                             </Col>
                     <Col>
-                        {map(daysOfWeek, (daySelected, dayId) => {
+                        {map(this.state.weekDays, (daySelected, dayId) => {
                             const inputId = `shift-setting-${key}-${dayId}`
 
-                            return <FormGroup check inline>
-                                <Input className="form-check-input" type="checkbox" id={inputId} checked={daySelected} />
+                            return <FormGroup check inline key={`${identifier}-${dayId}`}>
+                                <Input className="form-check-input" type="checkbox" id={inputId} checked={daySelected} onChange={({ target: { checked : value } }) => {
+                                    this.setDayOfWeek(dayId, value)
+                                }} />
                                 <Label check className="form-check-label" htmlFor={inputId}>{upperFirst(dayId)}</Label>
                             </FormGroup>
                         })}
@@ -99,11 +142,19 @@ const ShiftSettingItem = (props) => {
                 </FormGroup>
             </CardBody>
         </Card>
-    )
+    }
+
+    shouldComponentUpdate (nextState) {
+        return true
+    }
 }
 
 ShiftSettingItem.propTypes = {
-    onDelete: PropTypes.func
+    data: PropTypes.shape({
+        rule: PropTypes.string
+    }),
+    onDelete: PropTypes.func,
+    onChange: PropTypes.func
 }
 
 const ShiftSettingItemStyles = StyleSheet.create({

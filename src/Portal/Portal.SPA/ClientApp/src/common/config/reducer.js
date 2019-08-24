@@ -1,4 +1,4 @@
-﻿import { combineReducers } from 'redux'
+import { combineReducers } from 'redux'
 import { handleActions } from 'redux-actions'
 import { routerReducer } from 'react-router-redux'
 

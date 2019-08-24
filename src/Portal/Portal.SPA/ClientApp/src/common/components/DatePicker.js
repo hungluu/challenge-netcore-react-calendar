@@ -1,4 +1,4 @@
-﻿import React from 'react'
+import React from 'react'
 import classNames from 'classnames'
 import 'react-datepicker/dist/react-datepicker.css'
 import './DatePicker.scss'

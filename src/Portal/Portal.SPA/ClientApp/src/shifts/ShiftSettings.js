@@ -68,6 +68,20 @@ class ShiftSettings extends Component {
         }
     }
 
+    updateShiftSetting(setting) {
+        const newSettings = map(this.state.settings, (st) => {
+            return st.id === setting.id ? setting : st
+        })
+
+        this.setState({
+            settings: newSettings
+        })
+    }
+
+    async saveShiftSettings() {
+        await ShopService.updateShiftSettings(this.state.shopId, this.state.locationId, this.state.settings)
+    }
+
     render () {
         return <div className="animated fadeIn">
             <Row>
@@ -84,7 +98,7 @@ class ShiftSettings extends Component {
                                             className="form-control"
                                             disabled={!this.state.shops.length}
                                             value={this.state.shopId}
-                                            onChange={(shopId) => this.selectShop(shopId)}>
+                                            onChange={({ target: { value } }) => this.selectShop(parseInt(value))}>
                                             {map(this.state.shops, shop => {
                                                 return <option value={shop.id} key={shop.id}>{shop.name}</option>
                                             })}
@@ -104,7 +118,7 @@ class ShiftSettings extends Component {
                             </Row>
                             <Row>
                                 <Col>
-                                    <Button type="reset" color="primary"><i className="fa fa-check-circle-o"></i> Save</Button>
+                                    <Button type="reset" color="primary" onClick={() => this.saveShiftSettings()}><i className="fa fa-check-circle-o"></i> Save</Button>
                                 </Col>
                                 <Col>
                                     <Button className="pull-right" type="reset" color="success" onClick={() => this.addNewShiftSetting()}><i className="fa fa-plus"></i> Add new</Button>
@@ -115,7 +129,13 @@ class ShiftSettings extends Component {
                 </Col>
             </Row>
 
-            {map(filter(this.state.settings, ['isDeleted', false]), setting => <ShiftSettingItem key={setting.id} setting={setting} onDelete={(setting) => this.removeShiftSetting(setting)} />)}
+            {map(filter(this.state.settings, ['isDeleted', false]), setting =>
+                <ShiftSettingItem
+                    key={setting.id}
+                    data={setting}
+                    onChange={setting => this.updateShiftSetting(setting)}
+                    onDelete={setting => this.removeShiftSetting(setting)} />
+            )}
         </div>
     }
 }
