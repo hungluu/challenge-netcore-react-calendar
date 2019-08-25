@@ -36,7 +36,13 @@ namespace WebAPI.API
             var container = new ContainerBuilder();
             container.Populate(services);
 
-            container.RegisterModule(new ApplicationModule(Configuration["ConnectionString"]));
+            var dbServerName = Environment.GetEnvironmentVariable("MSSQL_SERVER_NAME");
+            var dbPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
+            var dbUser = Environment.GetEnvironmentVariable("SA_USER");
+            var dbName = Environment.GetEnvironmentVariable("MSSQL_DB_NAME");
+            var connectionString = $@"Data Source={dbServerName};Initial Catalog={dbName};User ID={dbUser};Password={dbPassword};ConnectRetryCount=3;"; // Configuration["ConnectionString"]
+
+            container.RegisterModule(new ApplicationModule(connectionString));
             container.RegisterModule(new MediatorModule());
 
             return new AutofacServiceProvider(container.Build());
@@ -117,10 +123,16 @@ namespace WebAPI.API
 
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
+            var dbServerName = Environment.GetEnvironmentVariable("MSSQL_SERVER_NAME");
+            var dbPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
+            var dbUser = Environment.GetEnvironmentVariable("SA_USER");
+            var dbName = Environment.GetEnvironmentVariable("MSSQL_DB_NAME");
+            var connectionString = $@"Data Source={dbServerName};Initial Catalog={dbName};User ID={dbUser};Password={dbPassword};"; // Configuration["ConnectionString"]
+
             services.AddEntityFrameworkSqlServer()
                    .AddDbContext<WebApiContext>(options =>
                    {
-                       options.UseSqlServer(configuration["ConnectionString"],
+                       options.UseSqlServer(connectionString,
                            sqlServerOptionsAction: sqlOptions =>
                            {
                                sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);

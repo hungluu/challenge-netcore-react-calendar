@@ -15,6 +15,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portal", "Portal", "{227F1B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portal.SPA", "src\Portal\Portal.SPA\Portal.SPA.csproj", "{FCE7FBE9-78F9-446A-8A0C-DD9974E4C15C}"
 EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{A1CC1D7F-CB7F-413B-B896-13527C9AF47B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{66540787-D313-4BE3-B5E1-A655A15A969A}"
+	ProjectSection(SolutionItems) = preProject
+		config\.env = config\.env
+		config\proxy.conf = config\proxy.conf
+		config\proxy.Dockerfile = config\proxy.Dockerfile
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +46,10 @@ Global
 		{FCE7FBE9-78F9-446A-8A0C-DD9974E4C15C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCE7FBE9-78F9-446A-8A0C-DD9974E4C15C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCE7FBE9-78F9-446A-8A0C-DD9974E4C15C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1CC1D7F-CB7F-413B-B896-13527C9AF47B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1CC1D7F-CB7F-413B-B896-13527C9AF47B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1CC1D7F-CB7F-413B-B896-13527C9AF47B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1CC1D7F-CB7F-413B-B896-13527C9AF47B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

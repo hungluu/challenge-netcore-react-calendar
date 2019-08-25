@@ -9,6 +9,7 @@ using WebAPI.Domain.Aggregates.ShopAggregate;
 using WebAPI.Domain.Seedworks;
 using WebAPI.Infrastructure.EntityConfigurations;
 using Microsoft.EntityFrameworkCore.Design;
+using WebAPI.Domain.Aggregates.EmployeeAggregate;
 
 namespace WebAPI.Infrastructure
 {
@@ -18,6 +19,9 @@ namespace WebAPI.Infrastructure
         public DbSet<Shop> Shops { get; set; }
         public DbSet<ShopLocation> ShopLocations { get; set; }
         public DbSet<ShiftSetting> ShiftSettings { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<ShiftBooking> ShiftBookings { get; set; }
 
         private readonly IMediator _mediator;
         private IDbContextTransaction _currentTransaction;
@@ -36,6 +40,8 @@ namespace WebAPI.Infrastructure
             modelBuilder.ApplyConfiguration(new ShopEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ShopLocationEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new ShiftSettingEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new EmployeeEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new ShiftBookingEntityTypeConfiguration());
         }
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))

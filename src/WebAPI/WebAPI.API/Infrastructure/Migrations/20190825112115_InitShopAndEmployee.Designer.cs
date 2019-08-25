@@ -10,8 +10,8 @@ using WebAPI.Infrastructure;
 namespace WebAPI.Infrastructure.Migrations
 {
     [DbContext(typeof(WebApiContext))]
-    [Migration("20190820100207_InitShops")]
-    partial class InitShops
+    [Migration("20190825112115_InitShopAndEmployee")]
+    partial class InitShopAndEmployee
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,9 +20,54 @@ namespace WebAPI.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("Relational:Sequence:.shop_locations_seq", "'shop_locations_seq', '', '1', '10', '', '', 'Int64', 'False'")
+                .HasAnnotation("Relational:Sequence:EliteDemoSchema.employee_seq", "'employee_seq', 'EliteDemoSchema', '1', '10', '', '', 'Int64', 'False'")
+                .HasAnnotation("Relational:Sequence:EliteDemoSchema.ship_bookings_seq", "'ship_bookings_seq', 'EliteDemoSchema', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:EliteDemoSchema.ship_settings_seq", "'ship_settings_seq', 'EliteDemoSchema', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("Relational:Sequence:EliteDemoSchema.shops_seq", "'shops_seq', 'EliteDemoSchema', '1', '10', '', '', 'Int64', 'False'")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("WebAPI.Domain.Aggregates.EmployeeAggregate.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:HiLoSequenceName", "employee_seq")
+                        .HasAnnotation("SqlServer:HiLoSequenceSchema", "EliteDemoSchema")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("employees","EliteDemoSchema");
+                });
+
+            modelBuilder.Entity("WebAPI.Domain.Aggregates.EmployeeAggregate.ShiftBooking", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:HiLoSequenceName", "ship_bookings_seq")
+                        .HasAnnotation("SqlServer:HiLoSequenceSchema", "EliteDemoSchema")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.SequenceHiLo);
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<int?>("EmployeeId");
+
+                    b.Property<DateTime>("FromDateTime");
+
+                    b.Property<int>("LocationId");
+
+                    b.Property<DateTime>("ToDateTime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.ToTable("shift_bookings","EliteDemoSchema");
+                });
 
             modelBuilder.Entity("WebAPI.Domain.Aggregates.ShopAggregate.ShiftSetting", b =>
                 {
@@ -87,6 +132,13 @@ namespace WebAPI.Infrastructure.Migrations
                     b.HasIndex("ShopId");
 
                     b.ToTable("shop_locations","EliteDemoSchema");
+                });
+
+            modelBuilder.Entity("WebAPI.Domain.Aggregates.EmployeeAggregate.ShiftBooking", b =>
+                {
+                    b.HasOne("WebAPI.Domain.Aggregates.EmployeeAggregate.Employee")
+                        .WithMany("ShiftBookings")
+                        .HasForeignKey("EmployeeId");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Aggregates.ShopAggregate.ShiftSetting", b =>

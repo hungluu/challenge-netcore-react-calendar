@@ -8,6 +8,7 @@ using System;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Domain.Aggregates.EmployeeAggregate;
 using WebAPI.Domain.Aggregates.ShopAggregate;
 using WebAPI.Infrastructure;
 
@@ -39,11 +40,9 @@ namespace WebAPI.API.Infrastructure
 
                         context.Shops.Add(shop1);
 
-                        var shop2 = new Shop("Honda");
-                        shop2.AddLocation("Honda DBP");
-                        shop2.AddLocation("Honda HD");
-
-                        context.Shops.Add(shop2);
+                        context.Employees.Add(new Employee("Karen"));
+                        context.Employees.Add(new Employee("Johnny"));
+                        context.Employees.Add(new Employee("Wick"));
 
                         await context.SaveChangesAsync();
                     }

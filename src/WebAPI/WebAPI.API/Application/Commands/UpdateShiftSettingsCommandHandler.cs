@@ -16,6 +16,9 @@ namespace WebAPI.API.Application.Commands
 
         public async Task<bool> Handle(UpdateShiftSettingsCommand command, CancellationToken cancellationToken)
         {
+            // For the simplicity of demonstration
+            // instead of triggering domain events
+            // data will be saved directly inside command handler
             var shopId = command.ShopId;
             var shop = await _shopRepository.GetAsync(shopId);
 
@@ -37,9 +40,6 @@ namespace WebAPI.API.Application.Commands
                 }
             }
 
-            // for the simplicity of demonstration
-            // instead of triggering domain events
-            // data will be saved directly inside event handler
             return await _shopRepository.UnitOfWork
                 .SaveChangesAsync() > 0;
         }

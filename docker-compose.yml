@@ -1,0 +1,49 @@
+version: '3.4'
+
+services:
+  webapi.api:
+    image: ${DOCKER_REGISTRY-}elitewebapiapi
+    build:
+      context: .
+      dockerfile: src/WebAPI/WebAPI.API/Dockerfile
+    env_file:
+      - config/.env
+    depends_on:
+      - webapi.db
+    networks:
+      - elitedemo-net
+
+  webapi.db:
+    image: "mcr.microsoft.com/mssql/server"
+    env_file:
+      - config/.env
+    expose:
+      - '1433'
+    networks:
+      - elitedemo-net
+
+  portal.spa:
+    image: ${DOCKER_REGISTRY-}eliteportalspa
+    build:
+      context: .
+      dockerfile: src/Portal/Portal.SPA/Dockerfile
+    networks:
+      - elitedemo-net
+
+  public.proxy:
+    image: ${DOCKER_REGISTRY-}elitepublicproxy
+    ports:
+      - '80:80'
+    build:
+      context: .
+      dockerfile: config/proxy.Dockerfile
+    env_file:
+      - config/.env
+    depends_on:
+      - webapi.api
+      - portal.spa
+    networks:
+      - elitedemo-net
+
+networks:
+  elitedemo-net:

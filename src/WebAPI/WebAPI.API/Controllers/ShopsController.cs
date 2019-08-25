@@ -46,7 +46,7 @@ namespace WebAPI.API.Controllers
 
         [Route("{shopId:int}/shift_settings")]
         [HttpPatch]
-        public async Task<object> CreateShiftSettngs([FromBody]List<ShiftSettingViewModel> shiftSettings, int shopId)
+        public async Task<object> UpdateShiftSettngs([FromBody]List<ShiftSettingViewModel> shiftSettings, int shopId)
         {
             bool commandResult = await _mediator.Send(new UpdateShiftSettingsCommand(shopId, shiftSettings));
 

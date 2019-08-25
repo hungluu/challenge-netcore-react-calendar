@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Runtime.Serialization;
 using WebAPI.API.Application.Queries;
 
@@ -8,7 +7,6 @@ namespace WebAPI.API.Application.Commands
 {
     public class UpdateShiftSettingsCommand : IRequest<bool>
     {
-
         [DataMember]
         public List<ShiftSettingViewModel> ShiftSettings { get; private set; }
         [DataMember]
