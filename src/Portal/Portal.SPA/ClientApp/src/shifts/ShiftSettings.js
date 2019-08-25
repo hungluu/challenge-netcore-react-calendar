@@ -18,8 +18,8 @@ import {
 } from 'reactstrap'
 
 class ShiftSettings extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             shopId: "",
@@ -64,7 +64,7 @@ class ShiftSettings extends Component {
         this.setState({ shops })
 
         if (firstShopId) {
-            await this.selectShop(firstShopId)
+            this.selectShop(firstShopId)
         }
     }
 

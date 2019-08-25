@@ -1,5 +1,5 @@
 import React from 'react'
-import dayjs from 'dayjs'
+import moment from 'moment'
 import { range, each, pick } from 'lodash'
 import DatePicker from './DatePicker'
 import * as PropTypes from 'prop-types'
@@ -17,7 +17,7 @@ class TimeRangePicker extends DateRangePicker {
             return []
         }
 
-        const selectedDay = dayjs(time)
+        const selectedDay = moment(time)
         const selectedMinute = selectedDay.minute()
         const selectedHour = selectedDay.hour()
         const hours = range(0, selectedMinute >= this.interval ? selectedHour + 1 : selectedHour)
@@ -29,7 +29,7 @@ class TimeRangePicker extends DateRangePicker {
 
         each(hours, (hour) => {
             each(minutes, (minute) => {
-                excludeTimeTicks.push(dayjs().set('hour', hour).set('minute', minute).toDate())
+                excludeTimeTicks.push(moment().set('hour', hour).set('minute', minute).toDate())
             })
         })
 
@@ -41,7 +41,7 @@ class TimeRangePicker extends DateRangePicker {
             return []
         }
 
-        const selectedDay = dayjs(time)
+        const selectedDay = moment(time)
         const selectedMinute = selectedDay.minute()
         const selectedHour = selectedDay.hour()
         const hours = range(selectedMinute < this.interval ? selectedHour : selectedHour + 1, 24)
@@ -53,7 +53,7 @@ class TimeRangePicker extends DateRangePicker {
 
         each(hours, (hour) => {
             each(minutes, (minute) => {
-                excludeTimeTicks.push(dayjs().set('hour', hour).set('minute', minute).toDate())
+                excludeTimeTicks.push(moment().set('hour', hour).set('minute', minute).toDate())
             })
         })
 

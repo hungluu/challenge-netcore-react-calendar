@@ -12,7 +12,7 @@ import {
     Button
 } from 'reactstrap'
 import { TimeRangePicker, DateRangePicker, ShiftService } from './config/lib'
-import dayjs from 'dayjs'
+import moment from 'moment'
 
 class ShiftSettingItem extends Component {
     constructor (props) {
@@ -62,23 +62,23 @@ class ShiftSettingItem extends Component {
             endDateStr
 
         if (this.state.dateRange.start) {
-            startDateStr = dayjs(this.state.dateRange.start).format('MM/DD/YYYY')
+            startDateStr = moment(this.state.dateRange.start).format('MM/DD/YYYY')
 
             if (this.state.timeRange.start) {
-                startDateStr += ' ' + dayjs(this.state.timeRange.start).format('HH:mm')
+                startDateStr += ' ' + moment(this.state.timeRange.start).format('HH:mm')
             }
 
-            startDate = dayjs(startDateStr).toDate()
+            startDate = moment(startDateStr).toDate()
         }
 
         if (this.state.dateRange.end) {
-            endDateStr = dayjs(this.state.dateRange.end).format('MM/DD/YYYY')
+            endDateStr = moment(this.state.dateRange.end).format('MM/DD/YYYY')
 
             if (this.state.timeRange.end) {
-                endDateStr += ' ' + dayjs(this.state.timeRange.end).format('HH:mm')
+                endDateStr += ' ' + moment(this.state.timeRange.end).format('HH:mm')
             }
 
-            endDate = dayjs(endDateStr).toDate()
+            endDate = moment(endDateStr).toDate()
         }
 
         this.props.onChange(assign({}, this.props.data, {

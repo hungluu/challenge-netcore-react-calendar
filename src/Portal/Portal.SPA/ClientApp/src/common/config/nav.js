@@ -6,9 +6,14 @@ export default {
             icon: 'icon-calendar',
             children: [
                 {
-                    name: 'Calendar',
-                    url: '/dashboard',
+                    name: 'Calendar (Admin)',
+                    url: '/shifts/calendar',
                     icon: 'nav-icon fa fa-calendar'
+                },
+                {
+                    name: 'Booking (Employee)',
+                    url: '/shifts/booking',
+                    icon: 'nav-icon fa fa-calendar-plus-o'
                 },
                 {
                     name: 'Settings',

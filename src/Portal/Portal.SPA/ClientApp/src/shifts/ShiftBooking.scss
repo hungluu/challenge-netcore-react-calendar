@@ -1,0 +1,45 @@
+.fc-event {
+    overflow: hidden;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.fc-time-grid-event .fc-time.fc-time--bg {
+    font-size: 1.5em;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: rgba(0,0,0,0.3);
+    height: 100%;
+    width: 100%;
+    transform: rotate(-30deg) translate(5%, 30%);
+}
+
+.fc-title {
+    margin-bottom: 5px;
+}
+
+.fc-event {
+    background: #fdfdfd;
+
+    &::after {
+        content: "\f00d";
+        font-family: 'FontAwesome';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 3em;
+        color: #ddd;
+    }
+}
+
+.fc-event.fc-event--selected {
+    border-color: #4dbd74;
+
+    &::after {
+        content: "\f00c";
+        color: #4dbd74;
+    }
+}

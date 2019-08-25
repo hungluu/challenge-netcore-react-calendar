@@ -1,0 +1,31 @@
+.fc-event {
+    overflow: hidden;
+    padding: 10px;
+}
+
+.fc-time-grid-event .fc-time.fc-time--bg {
+    font-size: 2em;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: rgba(0,0,0,0.1);
+    height: 100%;
+    width: 100%;
+    transform: rotate(-30deg) translate(5%, 30%);
+}
+
+.fc-title {
+    margin-bottom: 5px;
+}
+
+.fc-shift-employees select {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.fc-shift--unassigned {
+    background: #fdfdfd;
+}

@@ -1,4 +1,5 @@
 import { RRule, rrulestr } from 'rrule'
+import moment from 'moment'
 
 const ShiftService = {
     getRuleObject (ruleString) {
@@ -58,6 +59,24 @@ const ShiftService = {
         }
 
         return weekDayValues
+    },
+
+    getRuleDuration (ruleString) {
+        const rule = this.getRuleObject(ruleString)
+        let startDate,
+            endDate
+
+        if (!rule || !rule.options.dtstart || !rule.options.until) {
+            return null
+        }
+
+        startDate = moment.utc(rule.options.dtstart)
+        endDate = moment.utc(rule.options.until)
+            .set('year', startDate.year())
+            .set('month', startDate.month())
+            .set('day', startDate.day())
+
+        return moment.duration(endDate.diff(startDate))
     }
 }
 
