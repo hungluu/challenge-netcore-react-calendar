@@ -100,9 +100,6 @@ class ShiftSettingItem extends Component {
                 <div className="pull-right">
                     <Button type="reset" size="sm" color="danger" onClick={() => onDelete(data)}><i className="fa fa-trash"></i></Button>
                 </div>
-                <div>
-                    #{identifier}
-                </div>
                 <FormGroup row>
                     <Col className={css(ShiftSettingItemStyles.label)}>
                         Date Range

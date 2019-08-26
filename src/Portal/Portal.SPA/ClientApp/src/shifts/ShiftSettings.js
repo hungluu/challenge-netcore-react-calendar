@@ -84,6 +84,11 @@ class ShiftSettings extends Component {
 
     render () {
         return <div className="animated fadeIn">
+            <Card className="text-white bg-primary">
+                <CardBody>
+                   <b>Disclaimer</b> : Validations haven't been applied.
+                </CardBody>
+            </Card>
             <Card>
                 <CardBody>
                     <Row>

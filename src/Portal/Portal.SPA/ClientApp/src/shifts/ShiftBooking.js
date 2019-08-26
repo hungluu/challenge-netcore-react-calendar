@@ -11,7 +11,7 @@ import {
 } from 'reactstrap'
 import classNames from 'classnames'
 import moment from 'moment'
-import { map, get, first, padStart } from 'lodash'
+import { map, get, first, padStart, find } from 'lodash'
 import { StyleSheet, css } from 'aphrodite'
 import { Calendar, ShopService, ShiftService, EmployeeService } from './config/lib'
 import './ShiftBooking.scss'
@@ -42,6 +42,7 @@ class ShiftBooking extends Component {
     }
 
     addBooking(newBooking) {
+        console.log(newBooking)
         this.setState((state) => {
             return {
                 bookings: state.bookings.concat([newBooking])
@@ -91,9 +92,10 @@ class ShiftBooking extends Component {
 
     render () {
         return <div className="animated fadeIn">
-            <Card className="text-white bg-info">
+            <Card className="text-white bg-primary">
                 <CardBody>
-                   <b>Disclaimer</b> : For demonstration purposes only, employee can be selected by following dropdown. For real usage, employee is attached to current employee-role user who logged in into the portal
+                   <b>Disclaimer</b> : For demonstration purposes only, employee can be selected by following dropdown. For real usage, employee is attached to current employee-role user who logged in into the portal.
+                   Validations haven't been applied though.
                 </CardBody>
             </Card>
             <Card>
@@ -125,13 +127,19 @@ class ShiftBooking extends Component {
                     </Row>
                 </CardBody>
             </Card>
+            <Card className="text-white bg-info">
+                <CardBody>
+                   <i className="fa fa-info-circle"></i> Please click to select / deselect shifts
+                </CardBody>
+            </Card>
             <Card className={classNames(this.state.calendarLoading && "card--loading")}>
                 <CardBody>
                     <Calendar minTime="04:00:00" maxTime="23:59:59" events={this.state.events} eventRender={({ el, event }) => {
                         const startTime = moment(event.start).format('HH:mm')
                         const endTime = moment(event.end).format('HH:mm')
+                        const matchedBooking = find(this.state.bookings, (booking) => +booking.fromDate === +event.start && +booking.toDate === +event.end)
                         
-                        el.className = classNames(el.className, 'fc-event')
+                        el.className = classNames(el.className, matchedBooking && 'fc-event--selected')
 
                         el.innerHTML = `
                             <div class="fc-time fc-time--bg" data-start="${startTime}" data-full="${startTime} - ${endTime}">
