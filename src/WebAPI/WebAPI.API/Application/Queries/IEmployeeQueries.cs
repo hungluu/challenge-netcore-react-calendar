@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace WebAPI.API.Application.Queries
@@ -8,5 +9,7 @@ namespace WebAPI.API.Application.Queries
         Task<List<EmployeeViewModel>> GetEmployeesAsync();
 
         Task<List<ShiftBookingViewModel>> GetShiftBookingsFromEmployeeAsync(int employeeId);
+
+        Task<ShiftBookingViewModel> GetShiftBookingAsync(int employeeId, int locationId, DateTime fromDate, DateTime toDate);
     }
 }

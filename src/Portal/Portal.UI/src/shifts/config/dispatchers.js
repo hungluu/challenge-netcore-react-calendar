@@ -1,6 +1,7 @@
 import {
     ADD_SHOPS,
-    ADD_SHIFT_SETTINGS
+    ADD_SHIFT_SETTINGS,
+    ADD_EMPLOYEES
 } from './actions'
 import { ShopService } from './lib'
 
@@ -27,5 +28,13 @@ export const saveShiftSettings = function (shopId, settings) {
         const shiftSettings = await ShopService.getShiftSettingsFromShop(shopId)
 
         dispatch(ADD_SHIFT_SETTINGS(shiftSettings))
+    }
+}
+
+export const loadEmployees = function () {
+    return async dispatch => {
+        const employees = await ShopService.getEmployeesFromShop(1)
+
+        dispatch(ADD_EMPLOYEES(employees))
     }
 }

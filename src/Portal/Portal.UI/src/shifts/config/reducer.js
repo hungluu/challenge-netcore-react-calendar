@@ -4,7 +4,8 @@ import { handleActions } from 'redux-actions'
 
 const defaultState = {
     shops: [],
-    shiftSettings: []
+    shiftSettings: [],
+    employees: []
 }
 
 const ShiftsReducer = handleActions({
@@ -13,6 +14,9 @@ const ShiftsReducer = handleActions({
     }),
     [actions.ADD_SHIFT_SETTINGS]: (state, action) => assign({}, state, {
         shiftSettings: uniqBy(state.shiftSettings.concat(action.payload), st => st.id)
+    }),
+    [actions.ADD_EMPLOYEES]: (state, action) => assign({}, state, {
+        employees: action.payload
     })
 }, defaultState)
 

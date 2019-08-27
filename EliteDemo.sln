@@ -21,6 +21,111 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{665407
 		config\proxy.conf = config\proxy.conf
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Portal.UI", "Portal.UI", "{136C4641-DC20-449C-B722-D026AC2C4500}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\.gitignore = src\Portal\Portal.UI\.gitignore
+		src\Portal\Portal.UI\Dockerfile = src\Portal\Portal.UI\Dockerfile
+		src\Portal\Portal.UI\package.json = src\Portal\Portal.UI\package.json
+		src\Portal\Portal.UI\README.md = src\Portal\Portal.UI\README.md
+		src\Portal\Portal.UI\yarn.lock = src\Portal\Portal.UI\yarn.lock
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AF8FB094-3AD6-4D09-A451-8CED3262A516}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\src\App.js = src\Portal\Portal.UI\src\App.js
+		src\Portal\Portal.UI\src\App.scss = src\Portal\Portal.UI\src\App.scss
+		src\Portal\Portal.UI\src\index.js = src\Portal\Portal.UI\src\index.js
+		src\Portal\Portal.UI\src\registerServiceWorker.js = src\Portal\Portal.UI\src\registerServiceWorker.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "public", "public", "{7F44AB0F-0A3F-41C6-A313-881FB575D561}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\public\favicon.ico = src\Portal\Portal.UI\public\favicon.ico
+		src\Portal\Portal.UI\public\index.html = src\Portal\Portal.UI\public\index.html
+		src\Portal\Portal.UI\public\manifest.json = src\Portal\Portal.UI\public\manifest.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shifts", "shifts", "{89C8A871-BEB9-43CD-962B-F0BD12FE313B}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\src\shifts\ShiftBooking.js = src\Portal\Portal.UI\src\shifts\ShiftBooking.js
+		src\Portal\Portal.UI\src\shifts\ShiftBooking.scss = src\Portal\Portal.UI\src\shifts\ShiftBooking.scss
+		src\Portal\Portal.UI\src\shifts\ShiftSettingItem.js = src\Portal\Portal.UI\src\shifts\ShiftSettingItem.js
+		src\Portal\Portal.UI\src\shifts\ShiftSettings.js = src\Portal\Portal.UI\src\shifts\ShiftSettings.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{D3D5E8D0-BC1B-4A41-BDB9-E8257CEFEED9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{8BF94997-FBB8-48C4-8A7E-75F2C71017F5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{D27BF802-2358-46A6-A690-421B81A8D302}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{FFDEEA6A-20D5-4F34-A942-18D7D36EC862}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "styles", "styles", "{9A8ECF2A-8938-4F6F-A3D3-2EC360D3F297}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\src\assets\styles\_custom.scss = src\Portal\Portal.UI\src\assets\styles\_custom.scss
+		src\Portal\Portal.UI\src\assets\styles\_ie-fix.scss = src\Portal\Portal.UI\src\assets\styles\_ie-fix.scss
+		src\Portal\Portal.UI\src\assets\styles\_variables.scss = src\Portal\Portal.UI\src\assets\styles\_variables.scss
+		src\Portal\Portal.UI\src\assets\styles\style.scss = src\Portal\Portal.UI\src\assets\styles\style.scss
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "vendors", "vendors", "{5C9CD9EE-A761-448A-B92F-7A9B3357B407}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\src\assets\styles\vendors\_variables.scss = src\Portal\Portal.UI\src\assets\styles\vendors\_variables.scss
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{20DEC4FE-6693-46D4-AB2E-CA6AD9AF5DD4}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\src\assets\styles\modules\cards.scss = src\Portal\Portal.UI\src\assets\styles\modules\cards.scss
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "brand", "brand", "{6853B92A-4B9F-4FE5-A397-6B730D592ED9}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\src\assets\img\brand\logo.svg = src\Portal\Portal.UI\src\assets\img\brand\logo.svg
+		src\Portal\Portal.UI\src\assets\img\brand\sygnet.svg = src\Portal\Portal.UI\src\assets\img\brand\sygnet.svg
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "components", "components", "{8DD51FD2-38CA-44C2-A99B-E1FD0517818C}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\src\common\components\Calendar.js = src\Portal\Portal.UI\src\common\components\Calendar.js
+		src\Portal\Portal.UI\src\common\components\DatePicker.js = src\Portal\Portal.UI\src\common\components\DatePicker.js
+		src\Portal\Portal.UI\src\common\components\DatePicker.scss = src\Portal\Portal.UI\src\common\components\DatePicker.scss
+		src\Portal\Portal.UI\src\common\components\DateRangePicker.js = src\Portal\Portal.UI\src\common\components\DateRangePicker.js
+		src\Portal\Portal.UI\src\common\components\TimeRangePicker.js = src\Portal\Portal.UI\src\common\components\TimeRangePicker.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DefaultLayout", "DefaultLayout", "{70D99D9E-F406-4B10-973F-7FD309E8B4DE}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\src\common\components\DefaultLayout\DefaultAside.js = src\Portal\Portal.UI\src\common\components\DefaultLayout\DefaultAside.js
+		src\Portal\Portal.UI\src\common\components\DefaultLayout\DefaultFooter.js = src\Portal\Portal.UI\src\common\components\DefaultLayout\DefaultFooter.js
+		src\Portal\Portal.UI\src\common\components\DefaultLayout\DefaultHeader.js = src\Portal\Portal.UI\src\common\components\DefaultLayout\DefaultHeader.js
+		src\Portal\Portal.UI\src\common\components\DefaultLayout\index.js = src\Portal\Portal.UI\src\common\components\DefaultLayout\index.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{D6E44D78-CC18-4C5A-AE31-4A7F7EA8A567}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\src\common\config\nav.js = src\Portal\Portal.UI\src\common\config\nav.js
+		src\Portal\Portal.UI\src\common\config\reducer.js = src\Portal\Portal.UI\src\common\config\reducer.js
+		src\Portal\Portal.UI\src\common\config\request.js = src\Portal\Portal.UI\src\common\config\request.js
+		src\Portal\Portal.UI\src\common\config\routes.js = src\Portal\Portal.UI\src\common\config\routes.js
+		src\Portal\Portal.UI\src\common\config\store.js = src\Portal\Portal.UI\src\common\config\store.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{7970AAD5-DFA2-401B-A0F3-B9F7B9C7B2EB}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\src\common\services\EmployeeService.js = src\Portal\Portal.UI\src\common\services\EmployeeService.js
+		src\Portal\Portal.UI\src\common\services\ShiftService.js = src\Portal\Portal.UI\src\common\services\ShiftService.js
+		src\Portal\Portal.UI\src\common\services\ShopService.js = src\Portal\Portal.UI\src\common\services\ShopService.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{EABECFD7-3FF4-4394-9ADB-A2231D8CBB54}"
+	ProjectSection(SolutionItems) = preProject
+		src\Portal\Portal.UI\src\shifts\config\actions.js = src\Portal\Portal.UI\src\shifts\config\actions.js
+		src\Portal\Portal.UI\src\shifts\config\dispatchers.js = src\Portal\Portal.UI\src\shifts\config\dispatchers.js
+		src\Portal\Portal.UI\src\shifts\config\lib.js = src\Portal\Portal.UI\src\shifts\config\lib.js
+		src\Portal\Portal.UI\src\shifts\config\reducer.js = src\Portal\Portal.UI\src\shifts\config\reducer.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +156,23 @@ Global
 		{3A9A9924-3012-4BEA-A21B-980CBD4841AC} = {47078381-A10E-4918-9236-830FF96CD865}
 		{67F391C7-1B90-4786-ACEA-3A4CBFFBB29E} = {47078381-A10E-4918-9236-830FF96CD865}
 		{ED50F033-F3F4-4478-A78B-5F3B2DDA0E4F} = {47078381-A10E-4918-9236-830FF96CD865}
+		{136C4641-DC20-449C-B722-D026AC2C4500} = {227F1BED-6A2F-4D8D-840A-4AF53E02B721}
+		{AF8FB094-3AD6-4D09-A451-8CED3262A516} = {136C4641-DC20-449C-B722-D026AC2C4500}
+		{7F44AB0F-0A3F-41C6-A313-881FB575D561} = {136C4641-DC20-449C-B722-D026AC2C4500}
+		{89C8A871-BEB9-43CD-962B-F0BD12FE313B} = {AF8FB094-3AD6-4D09-A451-8CED3262A516}
+		{D3D5E8D0-BC1B-4A41-BDB9-E8257CEFEED9} = {AF8FB094-3AD6-4D09-A451-8CED3262A516}
+		{8BF94997-FBB8-48C4-8A7E-75F2C71017F5} = {AF8FB094-3AD6-4D09-A451-8CED3262A516}
+		{D27BF802-2358-46A6-A690-421B81A8D302} = {8BF94997-FBB8-48C4-8A7E-75F2C71017F5}
+		{FFDEEA6A-20D5-4F34-A942-18D7D36EC862} = {8BF94997-FBB8-48C4-8A7E-75F2C71017F5}
+		{9A8ECF2A-8938-4F6F-A3D3-2EC360D3F297} = {8BF94997-FBB8-48C4-8A7E-75F2C71017F5}
+		{5C9CD9EE-A761-448A-B92F-7A9B3357B407} = {9A8ECF2A-8938-4F6F-A3D3-2EC360D3F297}
+		{20DEC4FE-6693-46D4-AB2E-CA6AD9AF5DD4} = {9A8ECF2A-8938-4F6F-A3D3-2EC360D3F297}
+		{6853B92A-4B9F-4FE5-A397-6B730D592ED9} = {D27BF802-2358-46A6-A690-421B81A8D302}
+		{8DD51FD2-38CA-44C2-A99B-E1FD0517818C} = {D3D5E8D0-BC1B-4A41-BDB9-E8257CEFEED9}
+		{70D99D9E-F406-4B10-973F-7FD309E8B4DE} = {8DD51FD2-38CA-44C2-A99B-E1FD0517818C}
+		{D6E44D78-CC18-4C5A-AE31-4A7F7EA8A567} = {D3D5E8D0-BC1B-4A41-BDB9-E8257CEFEED9}
+		{7970AAD5-DFA2-401B-A0F3-B9F7B9C7B2EB} = {D3D5E8D0-BC1B-4A41-BDB9-E8257CEFEED9}
+		{EABECFD7-3FF4-4394-9ADB-A2231D8CBB54} = {89C8A871-BEB9-43CD-962B-F0BD12FE313B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A4CC52F9-D60A-4B32-ACD2-A4494899C65F}

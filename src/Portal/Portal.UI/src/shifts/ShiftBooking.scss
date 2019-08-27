@@ -43,3 +43,12 @@
         color: #4dbd74;
     }
 }
+
+.fc-event.fc-event--pending {
+    border-color: #666;
+    
+    &::after {
+        content: "\f110";
+        color: #999999;
+    }
+}

@@ -34,8 +34,8 @@ namespace WebAPI.Infrastructure.Repositories
             var shop = await _context.Shops.FindAsync(shopId);
             if (shop != null)
             {
-                await _context.Entry(shop)
-                    .Collection(i => i.ShopLocations).LoadAsync();
+                await _context.Entry(shop).Collection(s => s.ShopLocations).LoadAsync();
+                await _context.Entry(shop).Collection(s => s.ShiftSettings).LoadAsync();
             }
 
             return shop;

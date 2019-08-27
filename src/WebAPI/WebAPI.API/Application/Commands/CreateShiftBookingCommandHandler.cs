@@ -27,7 +27,7 @@ namespace WebAPI.API.Application.Commands
                 return false;
             }
 
-            employee.AddShiftBooking(command.FromDateTime, command.ToDatetime, command.LocationId);
+            employee.AddShiftBooking(command.FromDateTime, command.ToDateTime, command.LocationId);
 
             return await _employeeRepository.UnitOfWork
                 .SaveChangesAsync() > 0;

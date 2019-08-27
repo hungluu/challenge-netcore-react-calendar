@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace WebAPI.API.Application.Queries
 {
@@ -49,6 +50,29 @@ namespace WebAPI.API.Application.Queries
                 );
 
                 return results.AsList();
+            }
+        }
+
+        public async Task<ShiftBookingViewModel> GetShiftBookingAsync(int employeeId, int locationId, DateTime fromDate, DateTime toDate)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+
+                var results = await connection.QueryAsync<ShiftBookingViewModel>(
+                    @"SELECT b.[Id] as Id,
+                            b.[FromDateTime] as FromDateTime,
+                            b.[ToDateTime] as ToDateTime,
+                            b.[LocationId] as LocationId
+                        FROM [EliteDemoSchema].[shift_bookings] b
+                        WHERE b.EmployeeId = @employeeId
+                          AND b.LocationId = @locationId
+                          AND b.FromDateTime = @fromDate
+                          AND b.ToDateTime = @toDate",
+                    new { employeeId, locationId, fromDate, toDate }
+                );
+
+                return results.AsList().FirstOrDefault();
             }
         }
     }

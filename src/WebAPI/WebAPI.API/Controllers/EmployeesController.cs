@@ -45,14 +45,16 @@ namespace WebAPI.API.Controllers
             return new
             {
                 Created = commandResult
+                    ? await _employeeQueries.GetShiftBookingAsync(employeeId, booking.LocationId, booking.FromDateTime, booking.ToDateTime)
+                    : null
             };
         }
 
-        [Route("{employeeId:int}/shift_bookings")]
+        [Route("{employeeId:int}/shift_bookings/{bookingId:int}")]
         [HttpDelete]
-        public async Task<object> DeleteShiftBooking(int employeeId, [FromBody]ShiftBookingViewModel booking)
+        public async Task<object> DeleteShiftBooking(int employeeId, int bookingId)
         {
-            bool commandResult = await _mediator.Send(new DeleteShiftBookingCommand(employeeId, booking.Id));
+            bool commandResult = await _mediator.Send(new DeleteShiftBookingCommand(employeeId, bookingId));
 
             return new
             {

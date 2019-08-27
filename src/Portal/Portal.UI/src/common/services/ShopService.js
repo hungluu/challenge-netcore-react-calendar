@@ -1,56 +1,5 @@
-import { map, find, uniqBy, assign } from 'lodash'
+import { map, uniqBy, assign } from 'lodash'
 import request from '../config/request'
-
-const testShops = [
-    {
-        id: 1,
-        name: 'Vincom',
-        locations: [
-            {
-                id: 1,
-                name: 'Vincom DBP'
-            },
-            {
-                id: 2,
-                name: 'Vincom BD'
-            }
-        ],
-        shiftSettings: [
-            {
-                id: 1,
-                rule: `DTSTART:20190704T080000Z
-                RRULE:UNTIL=20190907T120000Z;BYDAY=MO,TU,TH,FR,SA,SU`,
-                locationId: 1
-            },
-            {
-                id: 2,
-                rule: `DTSTART:20190704T133000Z
-                RRULE:UNTIL=20190907T173000Z;BYDAY=MO,TU,WE,TH,SA,SU`,
-                locationId: 1
-            },
-            {
-                id: 4,
-                rule: `DTSTART:20190704T170000Z
-                RRULE:UNTIL=20190907T220000Z;BYDAY=MO,TU,WE,TH`,
-                locationId: 2
-            }
-        ],
-        employees: [
-            {
-                id: 1,
-                name: 'Henry'
-            },
-            {
-                id: 2,
-                name: 'Karen'
-            },
-            {
-                id: 3,
-                name: 'Oggy'
-            }
-        ]
-    }
-]
 
 const ShopService = {
     async updateShiftSettings (shopId, shiftSettings) {
@@ -95,11 +44,14 @@ const ShopService = {
     },
 
     async getEmployeesFromShop(shopId) {
-        const shop = find(testShops, { id: shopId })
+        if (!shopId) {
+            return []
+        }
 
-        return shop
-            ? this.mapShopEmployeeViewModels(shop.employees)
-            : []
+        const employeeRes = await request.get(`employees`)
+        const employees = employeeRes.data.data || []
+
+        return this.mapShopEmployeeViewModels(employees)
     },
 
     mapShopViewModels(shops) {

@@ -10,7 +10,7 @@ namespace WebAPI.API.Application.Commands
         public DateTime FromDateTime { get; private set; }
 
         [DataMember]
-        public DateTime ToDatetime { get; private set; }
+        public DateTime ToDateTime { get; private set; }
 
         [DataMember]
         public int LocationId { get; private set; }
@@ -22,7 +22,7 @@ namespace WebAPI.API.Application.Commands
         {
             EmployeeId = employeeId;
             FromDateTime = fromDateTime;
-            ToDatetime = toDateTime;
+            ToDateTime = toDateTime;
             LocationId = locationId;
         }
     }
