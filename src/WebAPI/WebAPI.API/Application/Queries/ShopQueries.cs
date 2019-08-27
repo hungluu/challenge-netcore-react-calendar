@@ -58,7 +58,7 @@ namespace WebAPI.API.Application.Queries
                 var query = @"SELECT
                             st.[Id] as Id,
                             st.[Quantity] as Quantity,
-                            st.[Rule] as Rules,
+                            st.[Rule] as [Rule],
                             st.[LocationId] as LocationId
                         FROM [EliteDemoSchema].[shift_settings] st
                         WHERE st.[ShopId] = @shopId";

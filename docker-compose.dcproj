@@ -5,7 +5,7 @@
     <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>a1cc1d7f-cb7f-413b-b896-13527c9af47b</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/api/values</DockerServiceUrl>
+    <DockerServiceUrl>http://localhost:81</DockerServiceUrl>
     <DockerServiceName>webapi.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>

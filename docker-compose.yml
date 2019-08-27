@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   webapi.api:
-    image: ${DOCKER_REGISTRY-}elitewebapiapi
+    image: ${DOCKER_REGISTRY-}elitedemowebapiapi
     build:
       context: .
       dockerfile: src/WebAPI/WebAPI.API/Dockerfile
@@ -23,25 +23,16 @@ services:
       - elitedemo-net
 
   portal.spa:
-    image: ${DOCKER_REGISTRY-}eliteportalspa
+    image: ${DOCKER_REGISTRY-}elitedemoportalspa
     build:
       context: .
-      dockerfile: src/Portal/Portal.SPA/Dockerfile
-    networks:
-      - elitedemo-net
-
-  public.proxy:
-    image: ${DOCKER_REGISTRY-}elitepublicproxy
-    ports:
-      - '80:80'
-    build:
-      context: .
-      dockerfile: config/proxy.Dockerfile
+      dockerfile: src/Portal/Portal.UI/Dockerfile
     env_file:
       - config/.env
+    ports:
+      - '80:80'
     depends_on:
       - webapi.api
-      - portal.spa
     networks:
       - elitedemo-net
 

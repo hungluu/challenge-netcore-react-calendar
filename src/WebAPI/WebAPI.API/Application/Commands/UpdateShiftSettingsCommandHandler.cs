@@ -34,6 +34,11 @@ namespace WebAPI.API.Application.Commands
                 {
                     shop.RemoveShiftSetting(setting.Id);
                 }
+                else if (settingId != null || settingId != 0)
+                {
+                    shop.RemoveShiftSetting(setting.Id);
+                    shop.AddShiftSetting(setting.Rule, setting.Quantity, setting.LocationId);
+                }
                 else
                 {
                     shop.AddShiftSetting(setting.Rule, setting.Quantity, setting.LocationId);

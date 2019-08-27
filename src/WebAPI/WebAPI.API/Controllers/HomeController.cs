@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace WebAPI.API.Controllers
 {
@@ -7,7 +8,14 @@ namespace WebAPI.API.Controllers
         // GET: /<controller>/
         public IActionResult Index()
         {
-            return new RedirectResult("~/swagger");
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                return new RedirectResult("~/swagger");
+            }
+            else
+            {
+                return new RedirectResult("~/api/swagger");
+            }
         }
     }
 }

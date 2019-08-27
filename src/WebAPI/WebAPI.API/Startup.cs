@@ -14,6 +14,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using WebAPI.API.Infrastructure.Filters;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace WebAPI.API
 {
@@ -36,11 +37,19 @@ namespace WebAPI.API
             var container = new ContainerBuilder();
             container.Populate(services);
 
-            var dbServerName = Environment.GetEnvironmentVariable("MSSQL_SERVER_NAME");
-            var dbPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
-            var dbUser = Environment.GetEnvironmentVariable("SA_USER");
-            var dbName = Environment.GetEnvironmentVariable("MSSQL_DB_NAME");
-            var connectionString = $@"Data Source={dbServerName};Initial Catalog={dbName};User ID={dbUser};Password={dbPassword};ConnectRetryCount=3;"; // Configuration["ConnectionString"]
+            string connectionString;
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                connectionString = Configuration["ConnectionString"];
+            }
+            else
+            {
+                var dbServerName = Environment.GetEnvironmentVariable("MSSQL_SERVER_NAME");
+                var dbPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
+                var dbUser = Environment.GetEnvironmentVariable("SA_USER");
+                var dbName = Environment.GetEnvironmentVariable("MSSQL_DB_NAME");
+                connectionString = $@"Data Source={dbServerName};Initial Catalog={dbName};User ID={dbUser};Password={dbPassword};";
+            }
 
             container.RegisterModule(new ApplicationModule(connectionString));
             container.RegisterModule(new MediatorModule());
@@ -51,44 +60,71 @@ namespace WebAPI.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            var pathBase = Configuration["PATH_BASE"];
+            var configBasePath = Configuration["PATH_BASE"];
+            var basePath = !string.IsNullOrEmpty(configBasePath) ? configBasePath : string.Empty;
+            var swaggerBasePath = $"{basePath}/swagger/v1/";
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             else
             {
+                basePath = $"/{basePath}api/";
+                swaggerBasePath = $"{basePath}swagger/v1/";
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
-            ConfigureAuth(app);
+            ConfigureAuth(app, env);
 
             app.UseMvcWithDefaultRoute();
 
-            app.UseSwagger()
+            app.UseSwagger(c =>
+                {
+                    c.PreSerializeFilters.Add((swaggerDoc, httpReq) => swaggerDoc.BasePath = basePath);
+                })
                .UseSwaggerUI(c =>
                {
-                   c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Ordering.API V1");
-                   c.OAuthClientId("orderingswaggerui");
-                   c.OAuthAppName("Ordering Swagger UI");
+                   c.SwaggerEndpoint($"{swaggerBasePath}swagger.json", "Elite.WebAPI V1");
+                   c.OAuthClientId("elitewenapiswaggerui");
+                   c.OAuthAppName("Elite.WebAPI Swagger UI");
                });
         }
 
-        protected virtual void ConfigureAuth(IApplicationBuilder app)
+        protected virtual void ConfigureAuth(IApplicationBuilder app, IHostingEnvironment env)
         {
+            if (env.IsDevelopment())
+            {
+                app.UseCors(CustomExtensionsMethods.MyAllowSpecificOrigins);
+            }
             app.UseAuthentication();
         }
     }
 
     static class CustomExtensionsMethods
     {
+        public static readonly string MyAllowSpecificOrigins = "CorsPolicy";
+
         public static IServiceCollection AddCustomMvc(this IServiceCollection services)
         {
             // Add framework services.
-            services.AddMvc(options =>
+            services.AddCors(options =>
+                {
+                    options.AddPolicy(MyAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+                })
+                .AddMvc(options =>
                 {
                     options.Filters.Add(typeof(HttpExceptionFilter));
                     options.Filters.Add(typeof(HttpActionFilter));
@@ -123,11 +159,19 @@ namespace WebAPI.API
 
         public static IServiceCollection AddCustomDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var dbServerName = Environment.GetEnvironmentVariable("MSSQL_SERVER_NAME");
-            var dbPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
-            var dbUser = Environment.GetEnvironmentVariable("SA_USER");
-            var dbName = Environment.GetEnvironmentVariable("MSSQL_DB_NAME");
-            var connectionString = $@"Data Source={dbServerName};Initial Catalog={dbName};User ID={dbUser};Password={dbPassword};"; // Configuration["ConnectionString"]
+            string connectionString;
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                connectionString = configuration["ConnectionString"];
+            }
+            else
+            {
+                var dbServerName = Environment.GetEnvironmentVariable("MSSQL_SERVER_NAME");
+                var dbPassword = Environment.GetEnvironmentVariable("SA_PASSWORD");
+                var dbUser = Environment.GetEnvironmentVariable("SA_USER");
+                var dbName = Environment.GetEnvironmentVariable("MSSQL_DB_NAME");
+                connectionString = $@"Data Source={dbServerName};Initial Catalog={dbName};User ID={dbUser};Password={dbPassword};";
+            }
 
             services.AddEntityFrameworkSqlServer()
                    .AddDbContext<WebApiContext>(options =>
