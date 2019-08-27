@@ -165,7 +165,7 @@ class ShiftSettings extends Component {
                     </Row>
                     <Row>
                         <Col>
-                            <Button type="reset" color="primary" onClick={() => this.addNewShiftSetting()} disabled={!!find(this.state.shiftSettings, st => !st.id && !st.isDeleted)}><i className="fa fa-plus"></i> Add new</Button>
+                            <Button type="reset" color="primary" onClick={() => this.addNewShiftSetting()} disabled={!!find(this.state.shiftSettings, st => !st.id && !st.isDeleted)}><i className="fa fa-plus"></i> Add shift</Button>
                         </Col>
                         <Col>
                             <Button className="pull-right" type="reset" color="success" onClick={() => this.saveShiftSettings()}><i className="fa fa-check-circle-o"></i> Save</Button>

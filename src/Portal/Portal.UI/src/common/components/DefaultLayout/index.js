@@ -5,10 +5,8 @@ import { Container } from 'reactstrap'
 
 import {
     AppAside,
-    AppFooter,
     AppHeader,
     AppSidebar,
-    AppSidebarFooter,
     AppSidebarForm,
     AppSidebarHeader,
     AppSidebarMinimizer,
@@ -21,7 +19,6 @@ import navigation from '../../config/nav'
 import routes from '../../config/routes'
 
 const DefaultAside = React.lazy(() => import('./DefaultAside'))
-const DefaultFooter = React.lazy(() => import('./DefaultFooter'))
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'))
 
 class DefaultLayout extends Component {
@@ -48,7 +45,6 @@ class DefaultLayout extends Component {
                         <Suspense>
                             <AppSidebarNav navConfig={navigation} {...this.props} router={router} />
                         </Suspense>
-                        <AppSidebarFooter />
                         <AppSidebarMinimizer />
                     </AppSidebar>
                     <main className="main">
@@ -79,11 +75,6 @@ class DefaultLayout extends Component {
                         </Suspense>
                     </AppAside>
                 </div>
-                <AppFooter>
-                    <Suspense fallback={this.loading()}>
-                        <DefaultFooter />
-                    </Suspense>
-                </AppFooter>
             </div>
         )
     }
