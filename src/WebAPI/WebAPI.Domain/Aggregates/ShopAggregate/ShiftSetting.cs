@@ -8,7 +8,7 @@ namespace WebAPI.Domain.Aggregates.ShopAggregate
         private string _rule;
         private int _locationId;
 
-        private ShiftSetting()
+        public ShiftSetting()
         {
         }
 

@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react'
+import React, { Component } from 'react'
 import { get, map, filter, assign, first, find } from 'lodash'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -114,9 +114,24 @@ class ShiftSettings extends Component {
     }
 
     async saveShiftSettings() {
-        this.props.saveShiftSettings(this.state.shopId, filter(this.state.shiftSettings, st => {
-            return st.rule && st.locationId && st.shopId
-        }))
+        const updatedShiftSettings = this.state.shiftSettings.slice()
+        this.setState({
+            shiftSettings: []
+        }, async () => {
+            await ShopService.updateShiftSettings(this.state.shopId, filter(updatedShiftSettings, st => {
+                return st.rule && st.locationId && st.shopId
+            }))
+
+            const locations = await ShopService.getShopLocationsFromShop(this.state.shopId)
+            const shiftSettings = await ShopService.getShiftSettingsFromShop(this.state.shopId)
+
+            this.setState(() => {
+                return {
+                    locations,
+                    shiftSettings
+                }
+            })
+        })
     }
 
     render () {
@@ -151,6 +166,7 @@ class ShiftSettings extends Component {
                             <FormGroup>
                                 <Label htmlFor="shift-settings-location-selection">Location</Label>
                                 <Input type="select"
+                                    value={this.state.locationId}
                                     name="select"
                                     id="shift-settings-location-selection"
                                     className="form-control"
@@ -196,7 +212,6 @@ class ShiftSettings extends Component {
         return nextProps.shops !== this.props.shops ||
             nextState.shopId !== this.state.shopId ||
             nextState.locationId !== this.state.locationId ||
-            nextProps.shiftSettings !== this.props.shiftSettings ||
             nextState.shiftSettings !== this.state.shiftSettings
     }
 }

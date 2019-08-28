@@ -20,14 +20,17 @@ class ShiftSettingItem extends Component {
 
         const { rule: ruleString } = props.data
         const rule = ShiftService.getRuleObject(ruleString)
+        const start = ShiftService.convertDateTimeToLocal(get(rule, 'options.dtstart'))
+        const end = ShiftService.convertDateTimeToLocal(get(rule, 'options.until'))
+
         this.state = {
             dateRange: {
-                start: get(rule, 'options.dtstart', null),
-                end: get(rule, 'options.until', null)
+                start: start,
+                end: end
             },
             timeRange: {
-                start: get(rule, 'options.dtstart', null),
-                end: get(rule, 'options.until', null)
+                start: start,
+                end: end
             },
             weekDays: ShiftService.getWeekDays(ruleString)
         }
@@ -60,33 +63,29 @@ class ShiftSettingItem extends Component {
         let endDate = null
 
         if (this.state.dateRange.start) {
-            startDate = moment.utc(this.state.dateRange.start)
+            startDate = moment(this.state.dateRange.start)
 
             if (this.state.timeRange.start) {
                 const startTime = moment(this.state.timeRange.start)
 
                 startDate.set('hour', startTime.hours()).set('minute', startTime.minutes()).set('second', 0)
             }
-
-            startDate = startDate.toDate()
         }
 
         if (this.state.dateRange.end) {
-            endDate = moment.utc(this.state.dateRange.end)
+            endDate = moment(this.state.dateRange.end)
 
             if (this.state.timeRange.end) {
                 const endTime = moment(this.state.timeRange.end)
 
                 endDate.set('hour', endTime.hours()).set('minute', endTime.minutes()).set('second', 0)
             }
-
-            endDate = endDate.toDate()
         }
 
         this.props.onChange(assign({}, this.props.data, {
             rule: ShiftService.getRuleString({
-                dtstart: startDate,
-                until: endDate,
+                dtstart: ShiftService.convertDateTimeToUTC(startDate),
+                until: ShiftService.convertDateTimeToUTC(endDate),
                 byweekday: ShiftService.getWeekDayValues(this.state.weekDays)
             })
         }))

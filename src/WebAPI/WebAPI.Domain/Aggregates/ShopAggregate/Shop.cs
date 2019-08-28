@@ -31,19 +31,9 @@ namespace WebAPI.Domain.Aggregates.ShopAggregate
             _shopLocations.Add(new ShopLocation(locationName));
         }
 
-        public void AddShiftSetting(string rule, int quantity, int locationId)
+        public void UpdateShiftSettings(List<ShiftSetting> shiftSettings)
         {
-            _shiftSettings.Add(new ShiftSetting(rule, quantity, locationId));
-        }
-
-        public void RemoveShiftSetting(int id)
-        {
-            var setting = _shiftSettings.Find(st => st.Id == id);
-
-            if (setting != null)
-            {
-                _shiftSettings.Remove(setting);
-            }
+            _shiftSettings = shiftSettings;
         }
     }
 }

@@ -70,13 +70,33 @@ const ShiftService = {
             return null
         }
 
-        startDate = moment.utc(rule.options.dtstart)
-        endDate = moment.utc(rule.options.until)
+        startDate = moment(rule.options.dtstart)
+        endDate = moment(rule.options.until)
             .set('year', startDate.year())
             .set('month', startDate.month())
             .set('day', startDate.day())
 
         return moment.duration(endDate.diff(startDate))
+    },
+
+    convertDateTimeToLocal (dateObject) {
+        if (!dateObject) {
+            return null
+        }
+
+        const utcDate = moment.isDate(dateObject) ? moment(dateObject).utc() : dateObject
+
+        return new Date(utcDate.year(), utcDate.month(), utcDate.day(), utcDate.hour(), utcDate.minute())
+    },
+
+    convertDateTimeToUTC (dateObject) {
+        if (!dateObject) {
+            return null
+        }
+
+        const utcDate = moment.isDate(dateObject) ? moment(dateObject).utc() : dateObject
+
+        return new Date(Date.UTC(utcDate.year(), utcDate.month(), utcDate.day(), utcDate.hour(), utcDate.minute()))
     }
 }
 

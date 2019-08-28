@@ -21,16 +21,6 @@ export const loadShiftSettings = function (shopId) {
     }
 }
 
-export const saveShiftSettings = function (shopId, settings) {
-    return async dispatch => {
-        await ShopService.updateShiftSettings(shopId, settings)
-
-        const shiftSettings = await ShopService.getShiftSettingsFromShop(shopId)
-
-        dispatch(ADD_SHIFT_SETTINGS(shiftSettings))
-    }
-}
-
 export const loadEmployees = function () {
     return async dispatch => {
         const employees = await ShopService.getEmployeesFromShop(1)

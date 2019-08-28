@@ -11,7 +11,7 @@ const ShopService = {
             id: st.isNew ? null : st.id
         }))
 
-        request.patch(`shops/${shopId}/shift_settings`, updatedShiftSettings)
+        await request.patch(`shops/${shopId}/shift_settings`, updatedShiftSettings)
     },
 
     async getShops() {
@@ -64,13 +64,13 @@ const ShopService = {
     },
 
     mapShiftSettingViewModels(shopId, settings) {
-        return map(settings, ({ id, locationId, rule }) => {
+        return map(settings, ({ id, locationId, rule, isDeleted }) => {
             return {
                 id,
                 rule,
                 locationId,
                 shopId: shopId,
-                isDeleted: false
+                isDeleted
             }
         })
     },

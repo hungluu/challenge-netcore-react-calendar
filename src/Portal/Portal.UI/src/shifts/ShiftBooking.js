@@ -91,7 +91,7 @@ class ShiftBooking extends Component {
         const shopLocations = await ShopService.getShopLocationsFromShop(this.state.shopId)
 
         this.setState({
-            events: map(shiftSettings, ({ locationId, locationName, rule, id }) => {
+            events: map(shiftSettings, ({ locationId, rule, id }) => {
                 const duration = ShiftService.getRuleDuration(rule)
                 const location = find(shopLocations, { id : locationId })
 

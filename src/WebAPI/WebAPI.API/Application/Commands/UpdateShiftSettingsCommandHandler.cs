@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using WebAPI.Domain.Aggregates.ShopAggregate;
@@ -27,23 +28,14 @@ namespace WebAPI.API.Application.Commands
                 return false;
             }
 
+            List<ShiftSetting> newShiftSettings = new List<ShiftSetting>();
+
             foreach (var setting in command.ShiftSettings)
             {
-                int? settingId = setting.Id;
-                if (setting.IsDeleted)
-                {
-                    shop.RemoveShiftSetting(setting.Id);
-                }
-                else if (settingId != null && settingId != 0)
-                {
-                    shop.RemoveShiftSetting(setting.Id);
-                    shop.AddShiftSetting(setting.Rule, setting.Quantity, setting.LocationId);
-                }
-                else
-                {
-                    shop.AddShiftSetting(setting.Rule, setting.Quantity, setting.LocationId);
-                }
+                newShiftSettings.Add(new ShiftSetting(setting.Rule, setting.Quantity, setting.LocationId));
             }
+
+            shop.UpdateShiftSettings(newShiftSettings);
 
             return await _shopRepository.UnitOfWork
                 .SaveChangesAsync() > 0;
