@@ -70,13 +70,10 @@ const ShiftService = {
             return null
         }
 
-        startDate = moment(rule.options.dtstart)
-        endDate = moment(rule.options.until)
-            .set('year', startDate.year())
-            .set('month', startDate.month())
-            .set('day', startDate.day())
+        startDate = moment(rule.options.dtstart).valueOf()
+        endDate = moment(rule.options.until).valueOf()
 
-        return moment.duration(endDate.diff(startDate))
+        return moment.duration(endDate - startDate)
     },
 
     convertDateTimeToLocal (dateObject) {

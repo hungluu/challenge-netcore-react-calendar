@@ -89,23 +89,27 @@ class ShiftBooking extends Component {
     async fetchEvents() {
         const shiftSettings = await ShopService.getShiftSettingsFromShop(this.state.shopId)
         const shopLocations = await ShopService.getShopLocationsFromShop(this.state.shopId)
+        const events = map(shiftSettings, ({ locationId, rule: ruleString, id }) => {
+            const duration = ShiftService.getRuleDuration(ruleString)
+            const location = find(shopLocations, { id : locationId })
+            const durationString = padStart(duration.hours(), 2, 0) + ':' + padStart(duration.minutes(), 2, 0) + ':00'
+
+            return {
+                duration: durationString,
+                title: 'Vincom',
+                rrule: ruleString,
+                allDay: false,
+                extendedProps: {
+                    rrule: ruleString,
+                    settingId: id,
+                    locationId,
+                    locationName: location ? location.name : ""
+                }
+            }
+        })
 
         this.setState({
-            events: map(shiftSettings, ({ locationId, rule, id }) => {
-                const duration = ShiftService.getRuleDuration(rule)
-                const location = find(shopLocations, { id : locationId })
-
-                return {
-                    title: 'Vincom',
-                    rrule: rule,
-                    duration: padStart(duration.hours(), 2, 0) + ':' + padStart(duration.minutes(), 2, 0) + ':00',
-                    extendedProps: {
-                        settingId: id,
-                        locationId,
-                        locationName: location ? location.name : ""
-                    }
-                }
-            })
+            events 
         })
     }
 
